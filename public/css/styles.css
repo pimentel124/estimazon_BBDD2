@@ -1,0 +1,10 @@
+/* FILEPATH: /c:/Users/alvar/Documents/GitHub/estimazon_BBDD2/resources/css/app.css */
+
+footer {
+    background-color: #f2f2f2;
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
