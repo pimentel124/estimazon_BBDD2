@@ -27,5 +27,6 @@ php artisan migrate
 #### Run the project
 
 ```bash
+npm run build
 php artisan serve
 ```
