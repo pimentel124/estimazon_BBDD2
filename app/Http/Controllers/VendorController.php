@@ -61,6 +61,8 @@ class VendorController extends Controller
      */
     public function destroy(Vendor $vendor)
     {
-        //
+        //delete vendor by id from the database
+        $vendor->delete();
+        
     }
 }

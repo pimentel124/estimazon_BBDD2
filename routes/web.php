@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Auth::routes();
 
 Route::get('/', function () {
     return view('Index');
@@ -21,8 +22,8 @@ Route::get('/greeting', function () {
     return 'Hello World';
 });
 
-Route::get('/carrito', 'CarritoController@index')->name('carrito');
+Route::get('/carrito', [App\Http\Controllers\CarritoController::class, 'index'])->name('carrito');
 
-Auth::routes();
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
