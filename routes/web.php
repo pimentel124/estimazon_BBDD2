@@ -21,6 +21,8 @@ Route::get('/greeting', function () {
     return 'Hello World';
 });
 
+Route::get('/carrito', 'CarritoController@index')->name('carrito');
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

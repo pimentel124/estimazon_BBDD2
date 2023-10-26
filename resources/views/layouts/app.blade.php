@@ -12,7 +12,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-    
+
     <!-- Styles -->
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 
@@ -49,6 +49,12 @@
                             @if (Route::has('register'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                </li>
+                            @endif
+
+                            @if (Route::has('carrito'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('carrito') }}">{{ __('Carrito') }}</a>
                                 </li>
                             @endif
                         @else
