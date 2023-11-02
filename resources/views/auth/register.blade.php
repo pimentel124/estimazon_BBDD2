@@ -61,6 +61,24 @@
                             </div>
                         </div>
 
+                        <div class="row mb-3">
+                            <label for="role_id" class="col-md-4 col-form-label text-md-end">{{ __('User Type') }}</label>
+
+                            <div class="col-md-6">
+                                <select id="role_id" name="role_id" class="form-select @error('role_id') is-invalid @enderror">
+                                    <option value="1">Comprador</option>
+                                    <option value="2">Vendedor</option>
+                                </select>
+
+                                @error('role_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">

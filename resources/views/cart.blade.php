@@ -6,12 +6,6 @@
 <head>
 </head>
 <body>
-   <div class="container">
-       <div class="row">
-           <div class="col-md-12">
-            <h1>Landing Page</h1>
-
-
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
@@ -37,8 +31,6 @@
                     </div>
                 </div>
             </div>
-
-            
            </div>
        </div>
 </body>

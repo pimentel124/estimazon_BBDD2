@@ -24,6 +24,9 @@ Route::get('/greeting', function () {
 
 Route::get('/carrito', [App\Http\Controllers\CarritoController::class, 'index'])->name('carrito');
 
+Route::get('/perfil', [App\Http\Controllers\PerfilController::class, 'index'])->name('perfil');
+
+Route::post('/perfil/actualizar', [App\Http\Controllers\PerfilController::class, 'actualizar'])->name('actualizar-perfil');
 
 Route::get('/', [App\Http\Controllers\ProductController::class, 'index'])->name('index');
 
