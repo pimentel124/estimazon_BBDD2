@@ -52,8 +52,9 @@
                                 </li>
                             @endif
 
-                            
+
                         @else
+
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
@@ -73,7 +74,9 @@
                             </li>
                             @if (Route::has('carrito'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('carrito') }}">{{ __('Carrito') }}</a>
+                                    <a class="nav-link" href="{{ route('carrito') }}">
+                                        <img src="{{ asset('images/carrito.png') }}" alt="Carrito" width="23" height="23">
+                                    </a>
                                 </li>
                             @endif
                         @endguest
@@ -90,7 +93,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <p>&copy; 2021 Estimazon. All rights reserved.</p>
+                    <p>&copy; 2023 Estimazon. All rights reserved.</p>
                 </div>
             </div>
         </div>

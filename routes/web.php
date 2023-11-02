@@ -22,6 +22,9 @@ Route::get('/greeting', function () {
     return 'Hello World';
 });
 
+Route::get('/carrito', [App\Http\Controllers\CarritoController::class, 'index'])->name('carrito');
+
+
 Route::get('/', [App\Http\Controllers\ProductController::class, 'index'])->name('index');
 
 
