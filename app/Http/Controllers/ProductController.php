@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use Illuminate\Http\Request;
+
 
 class ProductController extends Controller
 {
@@ -24,15 +26,35 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('products.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProductRequest $request)
+    public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'price' => 'required|numeric',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // Sube la imagen y obtén la ruta
+        $imagePath = $request->file('image')->store('uploads', 'public');
+
+        // Crea un nuevo producto y almacena la ruta de la imagen en la base de datos
+        $product = new Product([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'price' => $request->input('price'),
+            'image_url' => $imagePath, // Almacena la ruta de la imagen en la base de datos
+        ]);
+
+        $product->save();
+
+        return redirect()->route('subir_producto')->with('success', 'Producto subido con éxito.');
     }
 
     /**
