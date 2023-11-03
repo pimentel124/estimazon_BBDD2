@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('image_url');
             $table->unsignedBigInteger('vendor_id');
             $table->foreign('vendor_id')->references('id')->on('vendors');
+            $table->timestamps(); //created_at and updated_at
         });
     }
 

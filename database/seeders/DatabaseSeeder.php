@@ -47,8 +47,15 @@ class DatabaseSeeder extends Seeder
         ]]);
         */
 
+        //call product seeder and vendor seeder
+
+
         $this->call([
             VendorSeeder::class,
         ]);
+        $this->call([
+            ProductSeeder::class,
+        ]);
+
     }
 }
