@@ -29,6 +29,7 @@
                                         <td>{{ $product->name }}</td>
                                         <td>{{ $product->description }}</td>
                                         <td><img src="{{ $product->image_url }}" alt="{{ $product->name }}" width="100"></td>
+                                        <td>{{ $product->price}} €</td>
                                     </tr>
                                 @endforeach
                             </tbody>
