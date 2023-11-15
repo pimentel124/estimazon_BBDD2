@@ -33,6 +33,6 @@ Route::get('/', [App\Http\Controllers\ProductController::class, 'index'])->name(
 Route::get('/subir_producto', [App\Http\Controllers\ProductController::class, 'create'])->name('subir_producto');
 Route::post('/products', [App\Http\Controllers\ProductController::class, 'store'])->name('products.store');
 
-
+Route::get('/products/show/{id}', [App\Http\Controllers\ProductController::class, 'show']->name('products.show');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
