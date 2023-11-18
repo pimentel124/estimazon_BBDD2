@@ -4,11 +4,11 @@
 
 CREATE TABLE `CCAA` (
     `idCCAA` tinyint(4) unsigned NOT NULL,
-    `Nombre` varchar(100) NOT NULL,
+    `name` varchar(100) NOT NULL,
     PRIMARY KEY (`idCCAA`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Lista de Comunicades Autónomas';
 
-INSERT INTO `CCAA` (`idCCAA`, `Nombre`)
+INSERT INTO `CCAA` (`idCCAA`, `name`)
 VALUES
 	(1,'Andalucía'),
 	(2,'Aragón'),

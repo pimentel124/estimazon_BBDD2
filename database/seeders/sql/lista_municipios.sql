@@ -7,17 +7,17 @@
 # ************************************************************
 
 
-CREATE TABLE `MUNICIPIOS` (
-    `idMunicipio`   smallint(6) unsigned NOT NULL AUTO_INCREMENT,
-    `idProvincia`   smallint(6) NOT NULL,
-    `codMunicipio`  int(11) NOT NULL,
+CREATE TABLE `municipes` (
+    `idMunicipe`   smallint(6) unsigned NOT NULL AUTO_INCREMENT,
+    `idProvince`   smallint(6) NOT NULL,
+    `codMunicipe`  int(11) NOT NULL,
     `DC`            int(11) NOT NULL,
-    `Municipio`     varchar(100) NOT NULL,
+    `name`     varchar(100) NOT NULL,
     PRIMARY KEY (`idMunicipio`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Lista de Municipios';
 
 
-INSERT INTO `MUNICIPIOS` (`idProvincia`, `codMunicipio`, `DC`, `Municipio`)
+INSERT INTO `municipes` (`idProvince`, `codMunicipe`, `DC`, `name`)
 VALUES
 	(1,1,4,'Alegría-Dulantzi'),
 	(2,1,9,'Abengibre'),
