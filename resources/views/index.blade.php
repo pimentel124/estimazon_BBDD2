@@ -28,7 +28,12 @@
                                 <tbody>
                                     @foreach($products as $product)
                                     <tr>
-                                        <td>{{ $product->name }}</td>
+                                    <td>
+                                        <a href="{{ route('products.show', ['id' => $product->id]) }}">
+                                            {{ $product->name }}
+                                            </a>
+
+                                        </td>
                                         <td>{{ $product->description }}</td>
                                         <td><img src="{{ $product->image_url }}" alt="{{ $product->name }}" width="100"></td>
                                         <td>{{ $product->price}} €</td>
