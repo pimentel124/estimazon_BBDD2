@@ -13,14 +13,14 @@
 # ------------------------------------------------------------
 
 CREATE TABLE `provinces` (
-    `idProvince` smallint(6) unsigned NOT NULL,
+    `id` smallint(6) unsigned NOT NULL,
     `idCCAA`      tinyint(4) unsigned NOT NULL,
     `name`   varchar(30) DEFAULT NULL,
-    PRIMARY KEY (`idProvince`)
+    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Lista de Provincias. El campo idProvincia coincide con los dos primeros dígitos del código postal
 # de la provincia (los que tienen un dígito, añadir el 0 delante).';
 
-INSERT INTO `provinces` (`idProvince`, `idCCAA`, `name`)
+INSERT INTO `provinces` (`id`, `idCCAA`, `name`)
 VALUES
 	(2, 8, 'Albacete'),
 	(3, 10, 'Alicante/Alacant'),

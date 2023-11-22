@@ -1,0 +1,47 @@
+Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign('users_ibfk_1');
+        });
+
+        Schema::table('provinces', function (Blueprint $table) {
+            $table->dropForeign('provinces_ibfk_1');
+        });
+
+        Schema::table('products', function (Blueprint $table) {
+            $table->dropForeign('products_ibfk_2');
+            $table->dropForeign('products_ibfk_1');
+        });
+
+        Schema::table('product_stock', function (Blueprint $table) {
+            $table->dropForeign('product_stock_ibfk_2');
+            $table->dropForeign('product_stock_ibfk_1');
+        });
+
+        Schema::table('orders', function (Blueprint $table) {
+            $table->dropForeign('orders_ibfk_2');
+            $table->dropForeign('orders_ibfk_1');
+        });
+
+        Schema::table('order_items', function (Blueprint $table) {
+            $table->dropForeign('order_items_ibfk_2');
+            $table->dropForeign('order_items_ibfk_1');
+            $table->dropForeign('order_items_ibfk_3');
+        });
+
+        Schema::table('municipes', function (Blueprint $table) {
+            $table->dropForeign('municipes_ibfk_1');
+        });
+
+        Schema::table('incidences', function (Blueprint $table) {
+            $table->dropForeign('incidences_ibfk_2');
+            $table->dropForeign('incidences_ibfk_4');
+            $table->dropForeign('incidences_ibfk_1');
+            $table->dropForeign('incidences_ibfk_3');
+        });
+
+        Schema::table('categories', function (Blueprint $table) {
+            $table->dropForeign('categories_ibfk_1');
+        });
+
+        Schema::table('address', function (Blueprint $table) {
+            $table->dropForeign('address_ibfk_1');
+        });

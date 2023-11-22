@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB; // Add this import statement
+use Illuminate\Support\Facades\File;
 
 class DatabaseSeeder extends Seeder
 {
@@ -47,11 +48,14 @@ class DatabaseSeeder extends Seeder
         ]]);
         */
 
-        //call product seeder and vendor seeder
 
+        //call product seeder and vendor seeder
+        $sql = File::get(database_path('seeds/full_provinces.sql'));
+
+        DB::unprepared($sql); // Use the DB facade to execute the SQL query
 
         $this->call([
-            VendorSeeder::class,
+            UserSeeder::class,
             ProductSeeder::class,
             CategoriesTableSeeder::class,
         ]);
