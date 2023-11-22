@@ -12,14 +12,15 @@
 #
 # ------------------------------------------------------------
 
-CREATE TABLE `PROVINCIAS` (
-    `idProvincia` smallint(6) unsigned NOT NULL,
+CREATE TABLE `provinces` (
+    `id` smallint(6) unsigned NOT NULL,
     `idCCAA`      tinyint(4) unsigned NOT NULL,
-    `Provincia`   varchar(30) DEFAULT NULL,
-    PRIMARY KEY (`idProvincia`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Lista de Provincias';
+    `name`   varchar(30) DEFAULT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Lista de Provincias. El campo idProvincia coincide con los dos primeros dígitos del código postal
+# de la provincia (los que tienen un dígito, añadir el 0 delante).';
 
-INSERT INTO `PROVINCIAS` (`idProvincia`, `idCCAA`, `Provincia`)
+INSERT INTO `provinces` (`id`, `idCCAA`, `name`)
 VALUES
 	(2, 8, 'Albacete'),
 	(3, 10, 'Alicante/Alacant'),

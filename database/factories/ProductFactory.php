@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use App\Models\Vendor;
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,9 +22,9 @@ class ProductFactory extends Factory
         return [
             'name'=> fake()->name(),
             'description' => fake()->text(),
-            'price' =>fake()->randomFloat(2,1,100),
             'image_url' => fake()->imageUrl(),
-            'vendor_id' => Vendor::inRandomOrder()->first()->id,
+            'status' => 'out_of_stock'
+            //'category' => Category::where('parent_category', null)->inRandomOrder()->first()->id
         ];
         
     }
