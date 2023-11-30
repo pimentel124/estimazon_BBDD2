@@ -110,13 +110,13 @@ return new class extends Migration
             $table->foreign('municipe_id')->references(['id'])->on('municipes')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });
 
-        
+
         Schema::table('categories', function (Blueprint $table) {
             $table->foreign('parent_category')->references('id')->on('categories')->onDelete('cascade')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });
 
 
-    
+
         Schema::table('incidences', function (Blueprint $table) {
             $table->foreign('product_id')->references('id')->on('products')->onUpdate('NO ACTION')->onDelete('NO ACTION');
             $table->foreign('controller_id')->references('id')->on('users')->onUpdate('NO ACTION')->onDelete('NO ACTION');
