@@ -18,11 +18,6 @@
             </div>
 
             <div class="form-group mb-3">
-                <label for="price">Precio</label>
-                <input type="number" name="price" id="price" class="form-control" step="0.01" required>
-            </div>
-
-            <div class="form-group mb-3">
                 <label for="category">Categoría</label>
                 <select name="category" id="category" class="form-control" required>
                     @foreach($categories as $category)

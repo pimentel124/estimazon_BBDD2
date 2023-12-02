@@ -39,7 +39,6 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required',
             'description' => 'required',
-            'price' => 'required|numeric',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -50,7 +49,6 @@ class ProductController extends Controller
         $product = new Product([
             'name' => $request->input('name'),
             'description' => $request->input('description'),
-            'price' => $request->input('price'),
             'image_url' => $imagePath, // Almacena la ruta de la imagen en la base de datos
         ]);
 
@@ -93,4 +91,11 @@ class ProductController extends Controller
     {
         //
     }
+
+    public function myProducts()
+{
+    $userProducts = auth()->user()->products ?? collect(); // Use the null coalescing operator to handle null
+
+    return view('products.myprods', compact('userProducts'));
+}
 }
