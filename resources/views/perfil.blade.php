@@ -9,8 +9,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-            <div class="col-md-12">
-            <h1>Bienvenido, {{ $userName }}</h1>
+            <h1>Bienvenido, {{ auth()->user()->full_name }}</h1>
             @if (auth()->check())
                 <p>Tipo: {{ auth()->user()->role_id == 1 ? 'Comprador' : (auth()->user()->role_id == 2 ? 'Vendedor' : 'Desconocido') }}</p>
             @endif <!-- Resto de tu contenido de perfil -->
@@ -35,7 +34,7 @@
 
                     <div class="form-group mb-3">
                         <label for="name">Nombre</label>
-                        <input id="name" type="text" class="form-control" name="name" value="{{ auth()->user()->name }}">
+                        <input id="name" type="text" class="form-control" name="full_name" value="{{ auth()->user()->full_name }}">
                     </div>
 
                     <div class="form-group mb-3">

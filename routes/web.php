@@ -30,6 +30,8 @@ Route::post('/perfil/actualizar', [App\Http\Controllers\PerfilController::class,
 
 Route::get('/', [App\Http\Controllers\ProductController::class, 'index'])->name('index');
 
+Route::get('/myprods', [App\Http\Controllers\ProductController::class, 'myProducts'])->name('myprods');
+
 Route::get('/subir_producto', [App\Http\Controllers\ProductController::class, 'create'])->name('subir_producto');
 Route::post('/products', [App\Http\Controllers\ProductController::class, 'store'])->name('products.store');
 

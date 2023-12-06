@@ -18,7 +18,7 @@ class PerfilController extends Controller
     $user = auth()->user();
 
     $data = $request->validate([
-        'name' => 'required|string|max:255',
+        'full_name' => 'required|string|max:255',
         'email' => 'required|email|unique:users,email,' . $user->id,
         'password' => 'nullable|min:8|confirmed',
     ]);
