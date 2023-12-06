@@ -43,4 +43,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function address()
+   {
+       return $this->belongsTo(Address::class, 'address');
+   }
+
+   public function orders()
+   {
+       return $this->hasMany(Orders::class, 'user_id');
+   }
+
+   public function productStock()
+   {
+       return $this->hasMany(ProductStock::class, 'vendor_id');
+   }
 }
