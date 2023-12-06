@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 
 class ProductController extends Controller
@@ -16,11 +17,19 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        // Get all products from the database and pass them to the view
+        $products = DB::table('products as p')
+       ->select('p.id as product_id', 'p.name as product_name', 'p.description as product_description', 'p.image_url as image_url', 'ps.unit_price as price', 'ps.vendor_id', 'u.full_name as vendor_name')
+       ->join('product_stock as ps', 'p.id', '=', 'ps.product_id')
+       ->join('users as u', 'ps.vendor_id', '=', 'u.id')
+       ->whereRaw('ps.unit_price = (SELECT MIN(unit_price) FROM product_stock WHERE product_id = p.id)')
+       ->get();
 
-        // Pass the products to the view
-        return view('index', ['products' => $products]);
+       return view('index', ['products' => $products]);
+
     }
+
+    
 
     /**
      * Show the form for creating a new resource.

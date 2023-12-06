@@ -2,16 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class Products extends Model
 {
-    protected $fillable = ['name', 'description', 'image_url'];
-    use HasFactory;
+   protected $fillable = ['name', 'description', 'image_url', 'status', 'category'];
 
-    public function vendor()
-    {
-        return $this->belongsTo(Vendor::class);
-    }
+   public function category()
+   {
+       return $this->belongsTo(Categories::class, 'category');
+   }
+
+   public function prductStock()
+   {
+       return $this->hasMany(ProductStock::class);
+   }
 }
+
