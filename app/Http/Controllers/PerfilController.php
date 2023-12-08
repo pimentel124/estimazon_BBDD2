@@ -14,24 +14,11 @@ class PerfilController extends Controller
     }
 
     public function actualizar(Request $request)
-{
-    $user = auth()->user();
-
-    $data = $request->validate([
-        'full_name' => 'required|string|max:255',
-        'email' => 'required|email|unique:users,email,' . $user->id,
-        'password' => 'nullable|min:8|confirmed',
-    ]);
-    $user->fill($data);
-    $user->save();
-    // ...
-
-    public function actualizar(Request $request)
     {
         $user = auth()->user();
 
         $data = $request->validate([
-            'name' => 'required|string|max:255',
+            'full_name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => 'nullable|min:8|confirmed',
         ]);
@@ -41,10 +28,6 @@ class PerfilController extends Controller
 
         return redirect()->route('perfil')->with('success', 'Perfil actualizado con éxito');
     }
-    $user->update($data);
-
-    return redirect()->route('perfil')->with('success', 'Perfil actualizado con éxito');
-}
 
 public function getRoleId()
 {
