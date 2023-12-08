@@ -29,12 +29,12 @@ Route::get('/perfil', [App\Http\Controllers\PerfilController::class, 'index'])->
 Route::post('/perfil/actualizar', [App\Http\Controllers\PerfilController::class, 'actualizar'])->name('actualizar-perfil');
 
 Route::get('/', [App\Http\Controllers\ProductController::class, 'index'])->name('index');
+Route::group(['middleware' => 'vendor'], function () {
+    Route::get('/myprods', [App\Http\Controllers\ProductController::class, 'myProducts'])->name('myprods');
+    Route::get('/subir_producto', [App\Http\Controllers\ProductController::class, 'create'])->name('subir_producto');
+    Route::post('/products', [App\Http\Controllers\ProductController::class, 'store'])->name('products.store');
 
-Route::get('/myprods', [App\Http\Controllers\ProductController::class, 'myProducts'])->name('myprods');
-
-Route::get('/subir_producto', [App\Http\Controllers\ProductController::class, 'create'])->name('subir_producto');
-Route::post('/products', [App\Http\Controllers\ProductController::class, 'store'])->name('products.store');
-
+});
 Route::get('/products/show/{id}', [App\Http\Controllers\ProductController::class, 'show'])->name('products.show');
 Route::delete('products/{product}', [App\Http\Controllers\ProductController::class, 'destroy'])->name('products.destroy');
 Route::get('products/{product}/edit', [App\Http\Controllers\ProductController::class, 'edit'])->name('products.edit');
