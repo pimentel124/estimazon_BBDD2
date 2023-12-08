@@ -12,8 +12,7 @@
                     <tr>
                         <th>Nombre</th>
                         <th>Descripción</th>
-                        <th>Categoría</th>
-                        <!-- Add more columns as needed -->
+                        <th>Imagen</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -22,10 +21,21 @@
                         <tr>
                             <td>{{ $product->name }}</td>
                             <td>{{ $product->description }}</td>
-                            <td>{{ $product->category->name }}</td>
-                            <!-- Add more columns as needed -->
                             <td>
-                                <!-- Add actions like edit or delete -->
+                            @if($product->image_url)
+                                <img src="{{ asset('storage/uploads/' . basename($product->image_url)) }}" alt="{{ $product->name }}" width="100">
+                            @endif
+                            </td>
+                            <td>
+                            <form action="{{ route('products.edit', $product->id) }}" method="GET" style="display: inline;">
+                                @csrf
+                                <button type="submit" class="btn btn-primary">Editar</button>
+                            </form>
+                                <form action="{{ route('products.destroy', $product->id) }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach

@@ -61,8 +61,10 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('perfil') }}">Mi cuenta</a>
+                                    @if(Auth::user()->role_id == 2)
                                     <a class="dropdown-item" href="{{ route('subir_producto') }}">Subir producto</a>
                                     <a class="dropdown-item" href="{{ route('myprods') }}">Mis productos</a>
+                                    @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

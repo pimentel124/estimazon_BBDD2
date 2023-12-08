@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\ProductStock;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Http\Request;
@@ -50,9 +51,20 @@ class ProductController extends Controller
             'name' => $request->input('name'),
             'description' => $request->input('description'),
             'image_url' => $imagePath, // Almacena la ruta de la imagen en la base de datos
+            'amount' => 'required|numeric',
+            'unit_price' => 'required|numeric',
         ]);
 
         $product->save();
+
+        $productStock = new ProductStock([
+            'amount' => $request->input('amount'),
+            'unit_price' => $request->input('unit_price'),
+            'vendor_id' => $request->input('vendor_id'),
+        ]);
+
+        // Save the association between Product and ProductStock
+        $product->productStocks()->save($productStock);
 
         return redirect()->route('subir_producto')->with('success', 'Producto subido con éxito.');
     }
@@ -67,35 +79,46 @@ class ProductController extends Controller
         return view('products.show', compact('product'));
     }
 
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Product $product)
     {
-        //
+        return view('products.edit', compact('product'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(Request $request, Product $product)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+        ]);
+
+        $product->update($request->all());
+
+        return redirect()->route('myprods')->with('success', 'Producto actualizado con éxito.');
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Product $product)
     {
-        //
+        $product->productStocks()->delete();
+
+        // Now, delete the product
+        $product->delete();
+
+        return redirect()->route('myprods')->with('success', 'Producto eliminado con éxito.');
     }
 
-    public function myProducts()
-{
-    $userProducts = auth()->user()->products ?? collect(); // Use the null coalescing operator to handle null
 
-    return view('products.myprods', compact('userProducts'));
-}
+    public function myProducts()
+    {
+        $vendorId = auth()->id();
+        $userProducts = Product::whereHas('productStocks', function ($query) use ($vendorId) {
+            $query->where('vendor_id', $vendorId);
+        })->get();
+
+        return view('products.myprods', compact('userProducts'));
+    }
+
 }

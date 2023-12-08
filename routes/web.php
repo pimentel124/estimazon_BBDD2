@@ -36,5 +36,7 @@ Route::get('/subir_producto', [App\Http\Controllers\ProductController::class, 'c
 Route::post('/products', [App\Http\Controllers\ProductController::class, 'store'])->name('products.store');
 
 Route::get('/products/show/{id}', [App\Http\Controllers\ProductController::class, 'show'])->name('products.show');
-
+Route::delete('products/{product}', [App\Http\Controllers\ProductController::class, 'destroy'])->name('products.destroy');
+Route::get('products/{product}/edit', [App\Http\Controllers\ProductController::class, 'edit'])->name('products.edit');
+Route::put('products/{product}', [App\Http\Controllers\ProductController::class, 'update'])->name('products.update');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductStock extends Model
 {
+    protected $table = 'product_stock';
     protected $fillable = ['amount', 'unit_price', 'product_id', 'vendor_id'];
 
     use HasFactory;
