@@ -13,6 +13,7 @@
                         <th>Nombre</th>
                         <th>Descripción</th>
                         <th>Imagen</th>
+                        <th>Precio</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -26,6 +27,7 @@
                                 <img src="{{ asset('storage/uploads/' . basename($product->image_url)) }}" alt="{{ $product->name }}" width="100">
                             @endif
                             </td>
+                            <td>{{ $product->getPrice() }} €</td>
                             <td>
                             <form action="{{ route('products.edit', $product->id) }}" method="GET" style="display: inline;">
                                 @csrf

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container" style="min-height: 100vh;">
         <h2>Subir Producto</h2>
 
         <form method="POST" action="{{ route('products.store') }}" enctype="multipart/form-data">
@@ -24,6 +24,16 @@
                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
                 </select>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="amount">Cantidad</label>
+                <input type="number" name="amount" id="amount" class="form-control" required>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="unit_price">Precio Unitario</label>
+                <input type="number" name="unit_price" id="unit_price" class="form-control" required>
             </div>
 
             <div class="form-group mb-3">

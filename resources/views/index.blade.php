@@ -36,7 +36,7 @@
                                         </td>
                                         <td>{{ $product->description }}</td>
                                         <td><img src="{{ asset('storage/uploads/' . basename($product->image_url)) }}" alt="{{ $product->name }}" width="100"></td>
-                                        <td>{{ $product->price}} €</td>
+                                        <td>{{ $product->getPrice() }} €</td>
                                     </tr>
                                     @endforeach
                                 </tbody>

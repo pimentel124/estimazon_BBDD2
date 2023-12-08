@@ -41,6 +41,8 @@ class ProductController extends Controller
             'name' => 'required',
             'description' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'amount' => 'required|numeric',
+            'unit_price' => 'required|numeric',
         ]);
 
         // Sube la imagen y obtén la ruta
@@ -51,8 +53,6 @@ class ProductController extends Controller
             'name' => $request->input('name'),
             'description' => $request->input('description'),
             'image_url' => $imagePath, // Almacena la ruta de la imagen en la base de datos
-            'amount' => 'required|numeric',
-            'unit_price' => 'required|numeric',
         ]);
 
         $product->save();
@@ -60,7 +60,7 @@ class ProductController extends Controller
         $productStock = new ProductStock([
             'amount' => $request->input('amount'),
             'unit_price' => $request->input('unit_price'),
-            'vendor_id' => $request->input('vendor_id'),
+            'vendor_id' => auth()->id(),
         ]);
 
         // Save the association between Product and ProductStock
@@ -89,9 +89,19 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required',
             'description' => 'required',
+            'price' => 'required',
         ]);
 
-        $product->update($request->all());
+        $product->update([
+        'name' => $request->input('name'),
+        'description' => $request->input('description'),
+        ]);
+
+        foreach ($product->productStocks as $productStock) {
+            $productStock->update([
+                'unit_price' => $request->input('price'),
+            ]);
+        }
 
         return redirect()->route('myprods')->with('success', 'Producto actualizado con éxito.');
     }

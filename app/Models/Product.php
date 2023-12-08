@@ -9,6 +9,7 @@ class Product extends Model
 {
     protected $fillable = ['name', 'description', 'image_url'];
     use HasFactory;
+    public $timestamps = false; // Disable timestamps for this model
 
     public function vendor()
     {
@@ -19,4 +20,18 @@ class Product extends Model
 {
     return $this->hasMany(ProductStock::class);
 }
+// Product.php (Product model)
+
+public function getPrice()
+{
+    // Assuming there's a relationship with ProductStock
+    $productStock = $this->productStocks->first();
+
+    if ($productStock) {
+        $unitPrice = $productStock->unit_price;
+        return $unitPrice;
+    }
+    return 0;
+}
+
 }
