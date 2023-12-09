@@ -16,6 +16,7 @@
                                     <th>Nombre</th>
                                     <th>Descripción</th>
                                     <th>Imagen</th>
+                                    <th>Precio</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -23,7 +24,8 @@
                                     <tr>
                                         <td>{{ $product->name }}</td>
                                         <td>{{ $product->description }}</td>
-                                        <td><img src="{{ asset('images/'.$product->image) }}" alt="{{ $product->name }}" width="100"></td>
+                                        <td><img src="{{ asset('storage/uploads/' . basename($product->image_url)) }}" alt="{{ $product->name }}" width="100"></td>
+                                        <td>{{ $product->getPrice() }} €</td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -31,8 +33,6 @@
                     </div>
                 </div>
             </div>
-           </div>
-       </div>
 </body>
 </html>
 

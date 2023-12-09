@@ -23,7 +23,7 @@ Route::get('/greeting', function () {
 });
 
 Route::get('/carrito', [App\Http\Controllers\CarritoController::class, 'index'])->name('carrito');
-Route::post('/carrito/add/{product}', [CarritoController::class, 'add'])->name('carrito.add');
+Route::post('/carrito/add/{product}', [App\Http\Controllers\CarritoController::class, 'add'])->name('carrito.add');
 
 Route::get('/perfil', [App\Http\Controllers\PerfilController::class, 'index'])->name('perfil');
 

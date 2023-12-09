@@ -7,29 +7,30 @@ use App\Models\Product;
 
 class CarritoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::all();
+        $cart = $request->session()->get('carrito', []);
 
-    // Pass the products to the view
-    return view('cart', ['products' => $products]);
+        // Pass the products to the view
+        return view('cart', ['products' => $cart]);
     }
 
     public function add(Request $request, $productId)
     {
-        // Logic to add the product to the cart (this logic may vary based on your implementation)
-        // For example, you might store cart data in the session or a database
-
         // Retrieve the product based on the provided $productId
         $product = Product::find($productId);
 
-        // Add the product to the cart (replace this with your actual logic)
-        // For example, you might store cart data in the session
-        $cart = $request->session()->get('cart', []);
+        // Get the current cart from the session
+        $cart = $request->session()->get('carrito', []);
+
+        // Add the product to the cart
         $cart[] = $product;
-        $request->session()->put('cart', $cart);
+
+        // Update the session with the modified cart
+        $request->session()->put('carrito', $cart);
 
         return redirect()->back()->with('success', 'Product added to the cart successfully.');
     }
+
 }
 
