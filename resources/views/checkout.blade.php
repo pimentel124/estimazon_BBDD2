@@ -29,22 +29,10 @@
                                 <td>{{ $product->description }}</td>
                                 <td><img src="{{ asset('storage/uploads/' . basename($product->image_url)) }}" alt="{{ $product->name }}" width="100"></td>
                                 <td>{{ $product->getPrice() }} €</td>
-                                <td>
-                                    <form action="{{ route('carrito.remove', $product->id) }}" method="POST" style="display: inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">Quitar</button>
-                                    </form>
-                                </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
-
-                <!-- "Pagar" button -->
-                <div class="text-center">
-                    <a href="{{ route('checkout') }}" class="btn btn-primary">Pagar</a>
-                </div>
             </div>
         </div>
     </div>
