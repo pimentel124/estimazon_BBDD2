@@ -17,6 +17,7 @@
                                     <th>Descripción</th>
                                     <th>Imagen</th>
                                     <th>Precio</th>
+                                    <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -26,6 +27,13 @@
                                         <td>{{ $product->description }}</td>
                                         <td><img src="{{ asset('storage/uploads/' . basename($product->image_url)) }}" alt="{{ $product->name }}" width="100"></td>
                                         <td>{{ $product->getPrice() }} €</td>
+                                        <td>
+                                            <form action="{{ route('carrito.remove', $product->id) }}" method="POST" style="display: inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Quitar</button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
