@@ -15,7 +15,6 @@
                 <div class="form-group mb-3">
                     <label for="provincia">Provincia:</label>
                     <select class="form-control" id="provincia" name="provincia" required>
-                        <!-- Itera sobre la lista de provincias desde la base de datos -->
                         <option value="">Selecciona una provincia</option>
 
                         @foreach($provincias as $provincia)
@@ -31,6 +30,14 @@
                 <div class="form-group mb-3">
                     <label for="direccion">Dirección:</label>
                     <input type="text" class="form-control" id="direccion" name="direccion" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="numero">Número:</label>
+                    <input type="text" class="form-control" id="numero" name="numero" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="piso">Piso:</label>
+                    <input type="text" class="form-control" id="piso" name="piso" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Realizar Pedido</button>
             </form>

@@ -30,7 +30,7 @@
                                 <td>{{ $product->description }}</td>
                                 <td><img src="{{ asset('storage/uploads/' . basename($product->image_url)) }}" alt="{{ $product->name }}" width="100"></td>
                                 <td>{{ $product->getPrice() }} €</td>
-                                <td>{{ $product->quantity ?? 0 }}</td> <!-- Show the quantity from the cart -->
+                                <td>{{ $product->quantity ?? 0 }}</td>
                                 <td>
                                     <form action="{{ route('carrito.remove', $product->id) }}" method="POST" style="display: inline;">
                                         @csrf
