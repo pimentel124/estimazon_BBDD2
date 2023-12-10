@@ -8,6 +8,7 @@ use App\Models\ProductStock;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 
 class ProductController extends Controller
@@ -18,7 +19,14 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = Product::with('productStocks')->get();
+        //$products = Product::with('productStocks')->get();
+
+        $products = DB::table('products as p')
+            ->select('p.id as id', 'p.name as name', 'p.description as description', 'p.image_url as image_url', 'ps.unit_price as price', 'ps.vendor_id', 'u.full_name as vendor_name')
+            ->join('product_stock as ps', 'p.id', '=', 'ps.product_id')
+            ->join('users as u', 'ps.vendor_id', '=', 'u.id')
+            ->whereRaw('ps.unit_price = (SELECT MIN(unit_price) FROM product_stock WHERE product_id = p.id)')
+            ->get();
 
         return view('index', ['products' => $products]);
     }
@@ -73,9 +81,14 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
+
     public function show($id)
     {
-        $product = Product::with('vendor')->findOrFail($id);
+        $product = Product::with(['productStocks' => function ($query) {
+            $query->orderBy('unit_price', 'asc')->with('vendor');
+        }])->findOrFail($id);
+        // Log all the product properties to the console
+        //dd($product);
 
         return view('products.show', compact('product'));
     }
@@ -94,8 +107,8 @@ class ProductController extends Controller
         ]);
 
         $product->update([
-        'name' => $request->input('name'),
-        'description' => $request->input('description'),
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
         ]);
 
         foreach ($product->productStocks as $productStock) {
@@ -131,5 +144,4 @@ class ProductController extends Controller
 
         return view('products.myprods', compact('userProducts'));
     }
-
 }

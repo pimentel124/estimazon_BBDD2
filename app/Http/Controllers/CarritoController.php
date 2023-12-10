@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Support\Facades\Log;
 
 class CarritoController extends Controller
 {
@@ -15,10 +16,10 @@ class CarritoController extends Controller
         return view('cart', ['products' => $cart]);
     }
 
-    public function add(Request $request, $productId)
+    public function add($id, Request $request, $vendor_id = null)
     {
         // Retrieve the product based on the provided $productId
-        $product = Product::find($productId);
+        $product = Product::find($id);
 
         // Get the current cart from the session
         $cart = $request->session()->get('carrito', []);
@@ -38,7 +39,21 @@ class CarritoController extends Controller
             $cart[] = $product;
         }
 
-        $product->productStocks->first()->decrement('amount');
+        log($vendor_id);
+        // If vendor_id is not null, get the productStock where the vendor_id is the same as the param
+        if ($vendor_id !== null) {
+            //log to artisan console the vendor_id
+            $productStock = $product->productStocks()->where('vendor_id', $vendor_id)->first();
+        } else {
+            // Get the productStock with the lowest unit_price
+            $productStock = $product->productStocks()->orderBy('unit_price')->first();
+            //log to browser console the productStock
+            
+        }
+
+        if ($productStock) {
+            $productStock->increment('amount');
+        }
 
         // Update the session with the modified cart
         $request->session()->put('carrito', $cart);
@@ -46,29 +61,28 @@ class CarritoController extends Controller
         return redirect()->back()->with('success', 'Product added to the cart successfully.');
     }
 
+    public function remove(Request $request, $productId)
+    {
+        // Logic to remove the product from the cart (this logic may vary based on your implementation)
+        // For example, you might store cart data in the session or a database
 
+        // Retrieve the product based on the provided $productId
+        $product = Product::find($productId);
 
-public function remove(Request $request, $productId)
-{
-    // Logic to remove the product from the cart (this logic may vary based on your implementation)
-    // For example, you might store cart data in the session or a database
+        // Remove the product from the cart (replace this with your actual logic)
+        // For example, you might store cart data in the session
+        $cart = $request->session()->get('carrito', []);
+        $cart = array_filter($cart, function ($item) use ($product) {
+            return $item->id !== $product->id;
+        });
 
-    // Retrieve the product based on the provided $productId
-    $product = Product::find($productId);
+        $productStock = $product->productStocks->first();
+        if ($productStock) {
+            $productStock->increment('amount');
+        }
 
-    // Remove the product from the cart (replace this with your actual logic)
-    // For example, you might store cart data in the session
-    $cart = $request->session()->get('carrito', []);
-    $cart = array_filter($cart, function ($item) use ($product) {
-        return $item->id !== $product->id;
-    });
+        $request->session()->put('carrito', $cart);
 
-    $product = Product::find($productId);
-    $product->productStocks->first()->increment('amount');
-    $request->session()->put('carrito', $cart);
-
-    return redirect()->route('carrito')->with('success', 'Product removed from the cart successfully.');
+        return redirect()->route('carrito')->with('success', 'Product removed from the cart successfully.');
+    }
 }
-
-}
-

@@ -11,10 +11,12 @@ class Product extends Model
     use HasFactory;
     public $timestamps = false; // Disable timestamps for this model
 
+    
     public function vendor()
     {
-        return $this->belongsTo(Vendor::class);
+        return $this->belongsTo(User::class);
     }
+    
 
     public function productStocks()
 {
@@ -25,7 +27,7 @@ class Product extends Model
 public function getPrice()
 {
     // Assuming there's a relationship with ProductStock
-    $productStock = $this->productStocks->first();
+    $productStock = $this->productStocks()->orderBy('unit_price')->first();
 
     if ($productStock) {
         $unitPrice = $productStock->unit_price;

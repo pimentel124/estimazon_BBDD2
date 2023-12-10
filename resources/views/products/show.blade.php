@@ -1,69 +1,59 @@
 @extends('layouts.app')
 @section('content')
-<!DOCTYPE html>
-<html>
+    <!DOCTYPE html>
+    <html>
 
-<head>
-</head>
+    <head>
+    </head>
 
-<body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>{{ $product->name }}</h1>
-                <div class="container">
-                    <div class="row">
-                        <!-- Image Column -->
-                        <div class="col-md-4">
-                            <td>
-                                <img src="{{ asset($product->image_url) }}" alt="{{ $product->id }}" width="400"length="40">
-                            </td>
-                        </div>
-                        <!-- Description and Vendor Information Columns -->
-                        <div class="col-md-8">
-                            <div class="row">
-                                <!-- Description Column -->
-                                <div class="col-md-6">
-                                    <h4>Descripción</h4>
-                                    <p>{{ $product->description }}</p>
-                                </div>
-                                <!-- Vendor Information Square Container -->
-                                <div class="col-md-6">
-                                    @if ($product->vendor)
-                                        <div class="vendor-info-container bg-light rounded p-3 border border-gray">
-                                            <h4>Información del vendedor</h4>
-                                            <p>Nombre: {{ $product->vendor->name }}</p>
-                                            <p>Descripción vendedor: {{ $product->vendor->description }}</p>
-                                            <p>Precio: {{ $product->price }} €</p>
-                                            <!-- Cantidad Text and Dropdown Selector -->
-                                            <label for="cantidad">Cantidad:</label>
-                                            <select id="cantidad" name="cantidad">
-                                                @for ($i = 1; $i <= 30; $i++)
-                                                    <option value="{{ $i }}">{{ $i }}</option>
-                                                @endfor
-                                            </select>
-                                            <!-- Añadir al carrito -->
-                                            <button class="btn btn-primary" id="addToCartBtn">Añadir al carrito</button>
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
+    <body>
+        <div class="container-fluid">
+            <div class="row m-5">
+
+                <!-- Image Column -->
+                <div class="col-4 flex-fill p-3">
+                    <div class="image-tab">
+                        <img class="product-image" src="{{ $product->image_url }}" alt="{{ $product->name }}">
                     </div>
+                </div>
 
-                    <!-- Display other vendors -->
-                    <div class="row mt-4">
-                        <div class="col-md-12">
-                            <h2>Otros Vendedores</h2>
-                        </div>
-                    </div>
+                <!-- Description and Vendor Information Columns -->
+                <div class="col-8 flex-fill p-3">
+                    <h3>{{ $product->name }}</h3>
+                    <h5>Vendor: {{ $product->productStocks->first()->vendor->full_name }}</h5>
+                    <p>{{ $product->description }}</p>
+                    <p>{{ $product->productStocks->first()->unit_price }} €</p>
+
+                    <form action="{{ route('carrito.add', ['product' => $product->id, 'vendor_id' => $product->productStocks->first()->vendor_id]) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-primary">Add to cart</button>
+                    </form>
 
                 </div>
             </div>
+
+            <!-- Display other vendors -->
+            <div class="row m-5">
+                <div class="row">
+                    <h2>Otros Vendedores</h2>
+                </div>
+                @foreach ($product->productStocks->skip(1) as $stock)
+                <div class="row d-flex row-height p-1">
+                    <h5>Vendido por: {{ $stock->vendor->full_name }}</h5>
+                    <p>{{ $stock->unit_price }} €</p>
+                    <form action="{{ route('carrito.add', ['product' => $product->id, 'vendor_id' => $stock->vendor_id]) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-primary">Add to cart</button>
+                    </form>
+                </div>
+                <hr>
+                @endforeach
+                
+
+            </div>
         </div>
-    </div>
-</body>
+        
+    </body>
 
-</html>
-
+    </html>
 @endsection

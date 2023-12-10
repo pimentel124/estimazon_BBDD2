@@ -65,6 +65,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable()->index('user_id');
             $table->enum('status', ['pending', 'confirmed', 'sent', 'recieved', 'canceled', 'returned'])->nullable();
+            $table->timestamps();
             $table->unsignedBigInteger('delivery_address')->nullable()->index('delivery_address');
         });
 
@@ -72,6 +73,7 @@ return new class extends Migration
             $table->id();
             $table->integer('amount')->nullable();
             $table->decimal('unit_price', 10)->nullable();
+            $table->timestamps();
             $table->unsignedBigInteger('product_id')->nullable()->index('product_id');
             $table->unsignedBigInteger('vendor_id')->nullable()->index('vendor_id');
         });
