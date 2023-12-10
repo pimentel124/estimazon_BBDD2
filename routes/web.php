@@ -35,6 +35,8 @@ Route::group(['middleware' => 'vendor'], function () {
     Route::get('/myprods', [App\Http\Controllers\ProductController::class, 'myProducts'])->name('myprods');
     Route::get('/subir_producto', [App\Http\Controllers\ProductController::class, 'create'])->name('subir_producto');
     Route::post('/products', [App\Http\Controllers\ProductController::class, 'store'])->name('products.store');
+    Route::get('/pedidos', [App\Http\Controllers\PedidoController::class, 'index'])->name('pedidos');
+    Route::post('/enviar_pedido/{pedido}', [App\Http\Controllers\PedidoController::class, 'enviar'])->name('enviar_pedido');
 
 });
 Route::get('/products/show/{id}', [App\Http\Controllers\ProductController::class, 'show'])->name('products.show');
@@ -48,3 +50,4 @@ Route::get('/checkout', [App\Http\Controllers\CheckoutController::class, 'showCh
 Route::post('/process_checkout', [App\Http\Controllers\CheckoutController::class, 'process'])->name('process_checkout');
 
 Route::get('/getMunicipiosByProvince/{provinceId}', [App\Http\Controllers\CheckoutController::class, 'getMunicipiosByProvince']);
+Route::get('/controlador', [App\Http\Controllers\ControladorController::class, 'index'])->name('controlador');
