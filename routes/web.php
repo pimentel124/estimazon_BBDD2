@@ -43,4 +43,8 @@ Route::get('products/{product}/edit', [App\Http\Controllers\ProductController::c
 Route::put('products/{product}', [App\Http\Controllers\ProductController::class, 'update'])->name('products.update');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/checkout', [App\Http\Controllers\CheckoutController::class, 'index'])->name('checkout');
+Route::get('/checkout', [App\Http\Controllers\CheckoutController::class, 'showCheckoutForm'])->name('checkout');
+
+Route::post('/process_checkout', [App\Http\Controllers\CheckoutController::class, 'process'])->name('process_checkout');
+
+Route::get('/getMunicipiosByProvince/{provinceId}', [App\Http\Controllers\CheckoutController::class, 'getMunicipiosByProvince']);

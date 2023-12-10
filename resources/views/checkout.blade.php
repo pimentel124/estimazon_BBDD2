@@ -1,5 +1,3 @@
-<!-- cart.blade.php -->
-
 @extends('layouts.app')
 
 @section('content')
@@ -8,34 +6,60 @@
 <head>
 </head>
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>Carrito</h1>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Descripción</th>
-                            <th>Imagen</th>
-                            <th>Precio</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($products as $product)
-                            <tr>
-                                <td>{{ $product->name }}</td>
-                                <td>{{ $product->description }}</td>
-                                <td><img src="{{ asset('storage/uploads/' . basename($product->image_url)) }}" alt="{{ $product->name }}" width="100"></td>
-                                <td>{{ $product->getPrice() }} €</td>
-                            </tr>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Checkout</h1>
+            <form action="{{ route('process_checkout') }}" method="post">
+                @csrf
+                <div class="form-group mb-3">
+                    <label for="provincia">Provincia:</label>
+                    <select class="form-control" id="provincia" name="provincia" required>
+                        <!-- Itera sobre la lista de provincias desde la base de datos -->
+                        <option value="">Selecciona una provincia</option>
+
+                        @foreach($provincias as $provincia)
+                            <option value="{{ $provincia->id }}">{{ $provincia->name }}</option>
                         @endforeach
-                    </tbody>
-                </table>
-            </div>
+                    </select>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="municipio">Municipio:</label>
+                    <select class="form-control" id="municipio" name="municipio" required>
+                    </select>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="direccion">Dirección:</label>
+                    <input type="text" class="form-control" id="direccion" name="direccion" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Realizar Pedido</button>
+            </form>
         </div>
     </div>
+</div>
+
+<script>
+// Agrega un script para manejar la carga dinámica de municipios en función de la provincia seleccionada
+document.getElementById('provincia').addEventListener('change', function () {
+    var provinciaId = this.value;
+
+    // Llamada AJAX para obtener los municipios en función de la provincia seleccionada
+    fetch('{{ url('/getMunicipiosByProvince/') }}/' + provinciaId)
+        .then(response => response.json())
+        .then(data => {
+            // Llena el select de municipios con los datos obtenidos
+            var municipioSelect = document.getElementById('municipio');
+            municipioSelect.innerHTML = '';
+            data.forEach(municipio => {
+                var option = document.createElement('option');
+                option.value = municipio.id;
+                option.text = municipio.name;
+                municipioSelect.add(option);
+            });
+        });
+});
+</script>
+
 </body>
 </html>
 
