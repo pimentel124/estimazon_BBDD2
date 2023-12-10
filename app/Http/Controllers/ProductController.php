@@ -15,13 +15,14 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
-        $products = Product::all();
+        $products = Product::with('productStocks')->get();
 
-        // Pass the products to the view
         return view('index', ['products' => $products]);
     }
+
 
     /**
      * Show the form for creating a new resource.

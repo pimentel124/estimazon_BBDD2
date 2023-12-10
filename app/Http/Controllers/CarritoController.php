@@ -23,8 +23,22 @@ class CarritoController extends Controller
         // Get the current cart from the session
         $cart = $request->session()->get('carrito', []);
 
-        // Add the product to the cart
-        $cart[] = $product;
+        // Check if the product is already in the cart
+        $existingProduct = array_filter($cart, function ($item) use ($product) {
+            return $item->id === $product->id;
+        });
+
+        if (!empty($existingProduct)) {
+            // Product is already in the cart, update the quantity in the cart
+            $existingProductKey = key($existingProduct);
+            $cart[$existingProductKey]->quantity += 1; // Update the quantity as needed
+        } else {
+            // Product is not in the cart, add it with a quantity of 1
+            $product->quantity = 1; // Assuming you have a 'quantity' attribute in your Product model
+            $cart[] = $product;
+        }
+
+        $product->productStocks->first()->decrement('amount');
 
         // Update the session with the modified cart
         $request->session()->put('carrito', $cart);
@@ -32,7 +46,7 @@ class CarritoController extends Controller
         return redirect()->back()->with('success', 'Product added to the cart successfully.');
     }
 
-    // CarritoController.php
+
 
 public function remove(Request $request, $productId)
 {
@@ -48,6 +62,9 @@ public function remove(Request $request, $productId)
     $cart = array_filter($cart, function ($item) use ($product) {
         return $item->id !== $product->id;
     });
+
+    $product = Product::find($productId);
+    $product->productStocks->first()->increment('amount');
     $request->session()->put('carrito', $cart);
 
     return redirect()->route('carrito')->with('success', 'Product removed from the cart successfully.');

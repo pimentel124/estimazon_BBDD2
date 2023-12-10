@@ -13,6 +13,7 @@
                             <th>Descripción</th>
                             <th>Imagen</th>
                             <th>Precio</th>
+                            <th>Cantidad</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -27,6 +28,7 @@
                                 <td>{{ $product->description }}</td>
                                 <td><img src="{{ asset('storage/uploads/' . basename($product->image_url)) }}" alt="{{ $product->name }}" width="100"></td>
                                 <td>{{ $product->getPrice() }} €</td>
+                                <td>{{ $product->productStocks->first()->amount ?? 0 }}</td>
                                 <td>
                                     <form action="{{ route('carrito.add', $product->id) }}" method="POST" style="display: inline;">
                                         @csrf
