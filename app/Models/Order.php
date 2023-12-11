@@ -17,5 +17,9 @@ public function deliveryAddress()
 {
     return $this->belongsTo(Address::class, 'delivery_address');
 }
+public function incidences()
+{
+    return $this->hasMany(Incidencia::class);
+}
 
 }

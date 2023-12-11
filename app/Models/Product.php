@@ -11,12 +11,17 @@ class Product extends Model
     use HasFactory;
     public $timestamps = false; // Disable timestamps for this model
 
-    
+
     public function vendor()
     {
         return $this->belongsTo(User::class);
     }
-    
+
+    public function incidences()
+    {
+        return $this->hasMany(Incidencia::class);
+    }
+
 
     public function productStocks()
 {

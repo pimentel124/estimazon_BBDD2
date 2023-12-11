@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use App\Models\OrderItem;
+use App\Models\Incidencia;
+use App\Models\Order;
 use Illuminate\Support\Facades\DB;
 
 class PedidoController extends Controller
@@ -66,6 +68,36 @@ class PedidoController extends Controller
 
         // Puedes devolver una respuesta JSON si es necesario
         return redirect()->route('controlador');
+    }
+
+    public function mostrarIncidencia(Order $pedido)
+    {
+        // Lógica para mostrar la incidencia del pedido
+        return view('incidencia', ['pedido' => $pedido]);
+    }
+
+
+    public function almacenarIncidencia(Request $request, Order $pedido)
+    {
+        // Validación de datos de entrada (puedes personalizar según tus necesidades)
+        $request->validate([
+            'descripcion' => 'required|string',
+        ]);
+
+        // Crear la incidencia
+        $incidencia = new Incidencia([
+            'description' => $request->input('descripcion'),
+            'product_id' => $pedido->items->first()->product_id, // Se asume que tomas el producto del primer item del pedido
+            'vendor_id' => $pedido->items->first()->vendor_id, // Se asume que el vendor_id es el mismo que el del pedido
+            'controller_id' => auth()->id(), // Se asume que el controlador es el usuario autenticado
+        ]);
+
+
+        // Asociar la incidencia con el pedido
+        $pedido->incidences()->save($incidencia);
+
+        // Puedes redirigir a la página de detalles del pedido u otro lugar
+        return redirect()->route('repartidor')->with('success', 'Incidencia agregada exitosamente.');
     }
 
 }

@@ -43,6 +43,7 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id')->nullable()->index('product_id');
             $table->unsignedBigInteger('vendor_id')->nullable()->index('vendor_id');
             $table->unsignedBigInteger('controller_id')->nullable()->index('controller_id');
+            $table->integer('intentos')->default(0);
         });
 
         Schema::create('municipes', function (Blueprint $table) {
@@ -126,6 +127,7 @@ return new class extends Migration
             $table->foreign('controller_id')->references('id')->on('users')->onUpdate('NO ACTION')->onDelete('NO ACTION');
             $table->foreign('order_id')->references('id')->on('orders')->onUpdate('NO ACTION')->onDelete('NO ACTION');
             $table->foreign('vendor_id')->references('id')->on('users')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+
         });
 
         Schema::table('municipes', function (Blueprint $table) {

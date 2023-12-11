@@ -54,4 +54,9 @@ Route::get('/controlador', [App\Http\Controllers\ControladorController::class, '
 Route::get('/pedidos/{pedido}', [App\Http\Controllers\ControladorController::class, 'show'])->name('pedidos.show');
 
 Route::get('/avisar/{vendedorId}', [App\Http\Controllers\PedidoController::class, 'avisar'])->name('avisar');
+Route::get('/repartidor', [App\Http\Controllers\RepartidorController::class, 'index'])->name('repartidor');
+
+Route::get('/pedidos/{pedido}/incidencia', [App\Http\Controllers\PedidoController::class, 'mostrarIncidencia'])->name('pedidos.incidencia');
+Route::post('/pedidos/{pedido}/incidencias', [App\Http\Controllers\PedidoController::class, 'almacenarIncidencia'])->name('pedidos.incidencias.store');
+
 
