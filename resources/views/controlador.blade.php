@@ -27,7 +27,7 @@
                                     @if ($pedido->order->status == 'sent')
                                         <span class="btn btn-success disabled">Enviado</span>
                                     @else
-                                        <span class="btn btn-success disabled">Falta enviar</span>
+                                        <span class="btn btn-success disabled">Pendiente</span>
                                     @endif
                                 </td>
                             </tr>

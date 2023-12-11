@@ -25,12 +25,12 @@
                                 <td>
                                     <!-- Verifica si el estado es "sent" y cambia el botón en consecuencia -->
                                     @if ($pedido->order->status == 'sent')
-                                        <span class="btn btn-success disabled">Recibido</span>
+                                        <span class="btn btn-success disabled">Enviado</span>
                                     @else
                                         <!-- Si no es "sent", muestra el botón "Enviar" como antes -->
                                         <form action="{{ route('enviar_pedido', ['pedido' => $pedido->order_id]) }}" method="post">
                                             @csrf
-                                            <button type="submit" class="btn btn-primary">Pendiente</button>
+                                            <button type="submit" class="btn btn-primary">Enviar</button>
                                         </form>
                                     @endif
                                 </td>
