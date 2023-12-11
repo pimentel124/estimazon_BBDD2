@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use App\Models\OrderItem;
+use Illuminate\Support\Facades\DB;
 
 class PedidoController extends Controller
 {
@@ -57,4 +58,14 @@ class PedidoController extends Controller
         // Redirigir de vuelta a la página de pedidos con un mensaje de éxito
         return redirect()->route('pedidos')->with('success', 'Pedido enviado con éxito.');
     }
+
+    public function avisar(Request $request, $vendedorId)
+    {
+        // Llamar al stored procedure para actualizar el estado del vendedor
+        DB::statement('CALL actualizar_estado_vendedor(?)', [$vendedorId]);
+
+        // Puedes devolver una respuesta JSON si es necesario
+        return redirect()->route('controlador');
+    }
+
 }

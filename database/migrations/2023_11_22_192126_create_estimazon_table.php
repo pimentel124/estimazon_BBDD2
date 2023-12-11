@@ -101,6 +101,8 @@ return new class extends Migration
             $table->string('full_name')->nullable();
             $table->string('password');
             $table->string('NIF')->nullable();
+            $table->string('status')->nullable();
+            $table->integer('avisos')->default(0);
             $table->string('email')->unique();
             $table->integer('role_id')->default(1);
             $table->unsignedBigInteger('address')->nullable()->index('address');

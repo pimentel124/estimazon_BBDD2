@@ -51,3 +51,7 @@ Route::post('/process_checkout', [App\Http\Controllers\CheckoutController::class
 
 Route::get('/getMunicipiosByProvince/{provinceId}', [App\Http\Controllers\CheckoutController::class, 'getMunicipiosByProvince']);
 Route::get('/controlador', [App\Http\Controllers\ControladorController::class, 'index'])->name('controlador');
+Route::get('/pedidos/{pedido}', [App\Http\Controllers\ControladorController::class, 'show'])->name('pedidos.show');
+
+Route::get('/avisar/{vendedorId}', [App\Http\Controllers\PedidoController::class, 'avisar'])->name('avisar');
+
