@@ -90,12 +90,14 @@
                                     </form>
                                 </div>
                             </li>
-                            @if (Route::has('carrito'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('carrito') }}">
-                                        <img src="{{ asset('images/carrito.png') }}" alt="Carrito" width="23" height="23">
-                                    </a>
-                                </li>
+                            @if(Auth::user()->role_id == 1)
+                                @if (Route::has('carrito'))
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('carrito') }}">
+                                            <img src="{{ asset('images/carrito.png') }}" alt="Carrito" width="23" height="23">
+                                        </a>
+                                    </li>
+                                @endif
                             @endif
                         @endguest
                     </ul>

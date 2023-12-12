@@ -22,10 +22,6 @@ Route::get('/greeting', function () {
     return 'Hello World';
 });
 
-Route::get('/carrito', [App\Http\Controllers\CarritoController::class, 'index'])->name('carrito');
-Route::post('/carrito/add/{product}', [App\Http\Controllers\CarritoController::class, 'add'])->name('carrito.add');
-Route::delete('/carrito/remove/{product}', [App\Http\Controllers\CarritoController::class, 'remove'])->name('carrito.remove');
-
 Route::get('/perfil', [App\Http\Controllers\PerfilController::class, 'index'])->name('perfil');
 
 Route::post('/perfil/actualizar', [App\Http\Controllers\PerfilController::class, 'actualizar'])->name('actualizar-perfil');
@@ -39,6 +35,13 @@ Route::group(['middleware' => 'vendor'], function () {
     Route::post('/enviar_pedido/{pedido}', [App\Http\Controllers\PedidoController::class, 'enviar'])->name('enviar_pedido');
 
 });
+
+Route::group(['middleware' => 'comprador'], function () {
+    Route::get('/carrito', [App\Http\Controllers\CarritoController::class, 'index'])->name('carrito');
+    Route::post('/carrito/add/{product}', [App\Http\Controllers\CarritoController::class, 'add'])->name('carrito.add');
+    Route::delete('/carrito/remove/{product}', [App\Http\Controllers\CarritoController::class, 'remove'])->name('carrito.remove');
+});
+
 Route::get('/products/show/{id}', [App\Http\Controllers\ProductController::class, 'show'])->name('products.show');
 Route::delete('products/{product}', [App\Http\Controllers\ProductController::class, 'destroy'])->name('products.destroy');
 Route::get('products/{product}/edit', [App\Http\Controllers\ProductController::class, 'edit'])->name('products.edit');
