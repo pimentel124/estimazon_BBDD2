@@ -15,4 +15,8 @@ public function addresses()
     return $this->hasMany(Address::class, 'province_id');
 }
 
+public function shipping_provinces()
+{
+    return $this->hasMany(ShippingProvinces::class, 'province_id');
+}
 }

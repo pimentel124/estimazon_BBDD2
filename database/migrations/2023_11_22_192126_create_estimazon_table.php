@@ -111,6 +111,17 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        Schema::create('shippingcompany', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->nullable();
+        });
+
+        Schema::create('shipping_provinces', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedSmallInteger('province_id')->index('province_id');
+            $table->unsignedBigInteger('shipping_company_id')->index('shipping_company_id');
+        });
+
         Schema::table('address', function (Blueprint $table) {
             $table->foreign('municipe_id')->references(['id'])->on('municipes')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });
@@ -158,6 +169,11 @@ return new class extends Migration
             $table->foreign('idCCAA')->references('id')->on('ccaa')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });
 
+        Schema::table('shipping_provinces', function (Blueprint $table) {
+            $table->foreign('province_id')->references('id')->on('provinces');
+            $table->foreign('shipping_company_id')->references('id')->on('shippingcompany');
+        });
+
         Schema::table('users', function (Blueprint $table) {
             $table->foreign('address')->references('id')->on('address');
         });
@@ -193,6 +209,10 @@ return new class extends Migration
         Schema::dropIfExists('categories');
 
         Schema::dropIfExists('address');
+
+        Schema::dropIfExists('shippingcompany');
+
+        Schema::dropIfExists('shipping_provinces');
 
         DB::statement('SET FOREIGN_KEY_CHECKS = 1;');
     }
