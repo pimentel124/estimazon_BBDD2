@@ -25,12 +25,11 @@
                         <div class="row d-flex row-height p-1">
                             <div class="col-4 flex-fill">
                                 <div class="image-tab">
-                                    <img class="product-image" src="{{ $product->image_url }}" alt="{{ $product->name }}">
-                                </div>
+                                <img src="{{ asset('storage/uploads/' . basename($product->image_url)) }}" alt="{{ $product->name }}" width="100">                                </div>
                             </div>
                             <div class="col-8 flex-fill">
                                 <h3>
-                                    
+
                                     <a href="{{ route('products.show', ['id' => $product->id]) }}">
                                         {{ $product->name }}
                                     </a>
