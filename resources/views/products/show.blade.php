@@ -13,8 +13,7 @@
                 <!-- Image Column -->
                 <div class="col-4 flex-fill p-3">
                     <div class="image-tab">
-                        <img class="product-image" src="{{ $product->image_url }}" alt="{{ $product->name }}">
-                    </div>
+                    <img src="{{ asset('storage/uploads/' . basename($product->image_url)) }}" alt="{{ $product->name }}" width="100">                          </div>
                 </div>
 
                 <!-- Description and Vendor Information Columns -->
@@ -48,11 +47,11 @@
                 </div>
                 <hr>
                 @endforeach
-                
+
 
             </div>
         </div>
-        
+
     </body>
 
     </html>
