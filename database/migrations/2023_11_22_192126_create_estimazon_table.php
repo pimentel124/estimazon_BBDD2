@@ -43,7 +43,7 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id')->nullable()->index('product_id');
             $table->unsignedBigInteger('vendor_id')->nullable()->index('vendor_id');
             $table->unsignedBigInteger('controller_id')->nullable()->index('controller_id');
-            $table->integer('intentos')->default(0);
+            $table->smallInteger('intentos')->default(0);
         });
 
         Schema::create('municipes', function (Blueprint $table) {
