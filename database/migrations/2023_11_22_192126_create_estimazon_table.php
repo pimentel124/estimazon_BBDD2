@@ -36,15 +36,18 @@ return new class extends Migration
             $table->string('name', 100);
         });
 
+        /*
         Schema::create('incidences', function (Blueprint $table) {
             $table->id();
             $table->string('description')->nullable();
+            
             $table->unsignedBigInteger('order_id')->nullable()->index('order_id');
             $table->unsignedBigInteger('product_id')->nullable()->index('product_id');
             $table->unsignedBigInteger('vendor_id')->nullable()->index('vendor_id');
             $table->unsignedBigInteger('controller_id')->nullable()->index('controller_id');
-            $table->smallInteger('intentos')->default(0);
+            
         });
+        */
 
         Schema::create('municipes', function (Blueprint $table) {
             $table->comment('Lista de Municipios');
@@ -65,9 +68,11 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable()->index('user_id');
-            $table->enum('status', ['pending', 'confirmed', 'sent', 'recieved', 'canceled', 'returned'])->nullable();
+            $table->enum('status', ['cart', 'confirmed', 'to_center', 'delivering', 'recieved', 'alt_recieved', 'refused', 'returned'])->nullable();
+            $table->smallInteger('tries')->default(0);
             $table->timestamps();
             $table->unsignedBigInteger('delivery_address')->nullable()->index('delivery_address');
+            $table->unsignedBigInteger('shippingcompany')->nullable()->index('shippingcompany');
         });
 
         Schema::create('product_stock', function (Blueprint $table) {
@@ -132,7 +137,7 @@ return new class extends Migration
         });
 
 
-
+/*
         Schema::table('incidences', function (Blueprint $table) {
             $table->foreign('product_id')->references('id')->on('products')->onUpdate('NO ACTION')->onDelete('NO ACTION');
             $table->foreign('controller_id')->references('id')->on('users')->onUpdate('NO ACTION')->onDelete('NO ACTION');
@@ -140,7 +145,7 @@ return new class extends Migration
             $table->foreign('vendor_id')->references('id')->on('users')->onUpdate('NO ACTION')->onDelete('NO ACTION');
 
         });
-
+*/
         Schema::table('municipes', function (Blueprint $table) {
             $table->foreign('idProvince')->references('id')->on('provinces')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });
@@ -154,6 +159,7 @@ return new class extends Migration
         Schema::table('orders', function (Blueprint $table) {
             $table->foreign('delivery_address')->references('id')->on('address');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('shippingcompany')->references('id')->on('shippingcompany');
         });
 
         Schema::table('product_stock', function (Blueprint $table) {
@@ -202,7 +208,7 @@ return new class extends Migration
 
         Schema::dropIfExists('municipes');
 
-        Schema::dropIfExists('incidences');
+        //Schema::dropIfExists('incidences');
 
         Schema::dropIfExists('ccaa');
 

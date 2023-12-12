@@ -7,7 +7,14 @@ class ActualizarEstadoVendedorProcedure extends Migration
 {
     public function up()
     {
+
         DB::unprepared('
+            DROP PROCEDURE IF EXISTS actualizar_estado_vendedor
+        ');
+
+        $procedureExists = DB::select("SHOW PROCEDURE STATUS LIKE 'actualizar_estado_vendedor'");
+        if(empty($procedureExists)) {
+            DB::unprepared('
             CREATE PROCEDURE actualizar_estado_vendedor(IN vendedor_id INT)
             BEGIN
                 DECLARE total_avisos INT;
@@ -32,10 +39,14 @@ class ActualizarEstadoVendedorProcedure extends Migration
                 END IF;
             END
         ');
+        }
     }
 
     public function down()
     {
+        DB::unprepared('
+            DROP PROCEDURE IF EXISTS actualizar_estado_vendedor
+        ');
         // Puedes agregar una lógica para revertir el procedimiento almacenado si es necesario
     }
 }
