@@ -11,7 +11,7 @@
                             <th>Producto</th>
                             <th>Cantidad</th>
                             <th>Vendedor</th>
-                            <th>Tiempo restante</th>
+                            <th>Tiempo transcurrido</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -21,7 +21,7 @@
                                 <td>{{ $pedido->product->name }}</td>
                                 <td>{{ $pedido->quantity }}</td>
                                 <td>{{ $pedido->vendor->full_name }}</td>
-                                <td>{{ $pedido->dias_restantes }}</td>
+                                <td>{{ $pedido->dias_restantes }} días</td>
                                 <td>
                                     <!-- Verifica si el estado es "sent" y cambia el botón en consecuencia -->
                                     @if ($pedido->order->status == 'sent')

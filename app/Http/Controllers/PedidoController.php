@@ -23,18 +23,12 @@ class PedidoController extends Controller
         // Calcular los días restantes para cada pedido
         foreach ($orderItems as $orderItem) {
             $createdDate = Carbon::parse($orderItem->order->created_at);
-            $diasRestantes = $createdDate->addDays(5)->diff(now());
 
-            // Obtener días, horas y minutos restantes
-            $dias = $diasRestantes->d;
-            $horas = $diasRestantes->h;
-            $minutos = $diasRestantes->i;
+            // Obtener la diferencia en días entre la fecha de creación y el día actual
+            $diferenciaDias = max(0, $createdDate->diffInDays(now()));
 
             // Formatear la cadena
-            $tiempoRestante = sprintf('%d días, %d horas, %d minutos', $dias, $horas, $minutos);
-
-            $orderItem->dias_restantes = $tiempoRestante;
-
+            $orderItem->dias_restantes = $diferenciaDias;
         }
 
         // Pasar los OrderItems con los días restantes a la vista
