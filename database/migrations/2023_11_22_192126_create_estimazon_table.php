@@ -17,9 +17,10 @@ return new class extends Migration
         Schema::create('address', function (Blueprint $table) {
             $table->id();
             $table->string('direction')->nullable();
-            $table->unsignedSmallInteger('municipe_id')->nullable()->index('municipe_id');
             $table->string('number')->nullable();
             $table->string('floor')->nullable();
+            $table->unsignedSmallInteger('municipe_id')->nullable()->index('municipe_id');
+            $table->unsignedBigInteger('user_id')->index('user_id');
         });
 
         Schema::create('categories', function (Blueprint $table) {
@@ -111,7 +112,6 @@ return new class extends Migration
             $table->integer('avisos')->default(0);
             $table->string('email')->unique();
             $table->integer('role_id')->default(1);
-            $table->unsignedBigInteger('address')->nullable()->index('address');
             $table->rememberToken();
             $table->timestamps();
         });
@@ -129,6 +129,7 @@ return new class extends Migration
 
         Schema::table('address', function (Blueprint $table) {
             $table->foreign('municipe_id')->references(['id'])->on('municipes')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });
 
 
@@ -180,9 +181,11 @@ return new class extends Migration
             $table->foreign('shipping_company_id')->references('id')->on('shippingcompany');
         });
 
+        /*
         Schema::table('users', function (Blueprint $table) {
             $table->foreign('address')->references('id')->on('address');
         });
+        */
     }
 
     /**

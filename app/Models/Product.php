@@ -31,10 +31,14 @@ class Product extends Model
 }
 // Product.php (Product model)
 
-public function getPrice()
+public function getPrice($vendor_id = null)
 {
     // Assuming there's a relationship with ProductStock
-    $productStock = $this->productStocks()->orderBy('unit_price')->first();
+    if ($vendor_id) {
+        $productStock = $this->productStocks()->where('vendor_id', $vendor_id)->orderBy('unit_price')->first();
+    } else {
+        $productStock = $this->productStocks()->orderBy('unit_price')->first();
+    }
 
     if ($productStock) {
         $unitPrice = $productStock->unit_price;

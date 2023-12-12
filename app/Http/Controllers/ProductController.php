@@ -22,7 +22,7 @@ class ProductController extends Controller
         //$products = Product::with('productStocks')->get();
 
         $products = DB::table('products as p')
-            ->select('p.id as id', 'p.name as name', 'p.description as description', 'p.image_url as image_url', 'ps.unit_price as price', 'ps.vendor_id', 'u.full_name as vendor_name')
+            ->select('p.id as id', 'p.name as name', 'p.description as description', 'p.image_url as image_url', 'ps.unit_price as price', 'ps.vendor_id', 'ps.id as product_stockId', 'u.full_name as vendor_name')
             ->join('product_stock as ps', 'p.id', '=', 'ps.product_id')
             ->join('users as u', 'ps.vendor_id', '=', 'u.id')
             ->whereRaw('ps.unit_price = (SELECT MIN(unit_price) FROM product_stock WHERE product_id = p.id)')

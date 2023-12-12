@@ -4,16 +4,38 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\ProductStock;
+use App\Models\OrderItem;
+use App\Models\Order;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class CarritoController extends Controller
 {
+    
+    /*
     public function index(Request $request)
     {
         $cart = $request->session()->get('carrito', []);
 
         // Pass the products to the view
         return view('cart', ['products' => $cart]);
+    }
+    */
+
+    public function index() {
+        // Obtener el carrito de la tabla de pedidos con los items cargados antes
+        $order = Order::with(['items.product'])
+                      ->where('user_id', Auth::user()->id)
+                      ->where('status', 'cart')
+                      ->first();
+        
+        if (!$order) {
+            //return and empty cart
+            return view('cart', ['order_items' => [] ]);
+        }
+
+        return view('cart', ['order_items' => $order->items]);
     }
 
     public function add($id, Request $request, $vendor_id = null)
@@ -47,8 +69,7 @@ class CarritoController extends Controller
         } else {
             // Get the productStock with the lowest unit_price
             $productStock = $product->productStocks()->orderBy('unit_price')->first();
-            //log to browser console the productStock
-            
+
         }
 
         if ($productStock) {
@@ -61,6 +82,50 @@ class CarritoController extends Controller
         return redirect()->back()->with('success', 'Product added to the cart successfully.');
     }
 
+    public function addToCart($productStockId, $amount = 1){
+
+        $productStock = ProductStock::find($productStockId);
+
+        //find the actual cart of the user (its a table called order with the field status set to cart)
+        $order = Order::where('user_id', Auth::user()->id)->where('status', 'cart')->first();
+
+        //if the user doesnt have a cart, create one
+        if(!$order){
+            $order = new Order();
+            $order->user_id = Auth::user()->id;
+            $order->status = 'cart';
+            $order->save();
+        }
+        
+        //create a OrderItem with the productStockId and the amount
+        $orderItem = new OrderItem();
+        $orderItem->product_id = $productStock->product_id;
+        $orderItem->quantity = $amount;
+        $orderItem->vendor_id = $productStock->vendor_id;
+        $orderItem->order_id = $order->id;
+        $orderItem->save();
+
+    }
+
+
+    public function remove($productStockId){
+        $productStock = ProductStock::find($productStockId);
+        $order = Order::where('user_id', Auth::user()->id)->where('status', 'cart')->first();
+
+        if($order) {
+            $orderItem = $order->items()->where('product_id', $productStock->product_id)
+                                        ->where('vendor_id', $productStock->vendor_id)
+                                        ->first();
+            if($orderItem) {
+                $orderItem->delete();
+                return redirect()->route('carrito')->with('success', 'Product removed from the cart successfully.');
+            }
+
+        }
+        return redirect()->route('carrito')->with('500', 'Product removed from the cart successfully.');
+    }
+
+    /*
     public function remove(Request $request, $productId)
     {
         // Logic to remove the product from the cart (this logic may vary based on your implementation)
@@ -85,4 +150,7 @@ class CarritoController extends Controller
 
         return redirect()->route('carrito')->with('success', 'Product removed from the cart successfully.');
     }
+    */
+
+
 }

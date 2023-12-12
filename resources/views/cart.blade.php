@@ -24,15 +24,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($products as $product)
+                        @foreach($order_items as $item)
                             <tr>
-                                <td>{{ $product->name }}</td>
-                                <td>{{ $product->description }}</td>
-                                <td><img src="{{ asset('storage/uploads/' . basename($product->image_url)) }}" alt="{{ $product->name }}" width="100"></td>
-                                <td>{{ $product->getPrice() }} €</td>
-                                <td>{{ $product->quantity ?? 0 }}</td>
+                                <td>{{ $item->product->name}}</td>
+                                <td>{{ $item->product->description }}</td>
+                                <td><img src="{{ asset('storage/uploads/' . basename($item->product->image_url)) }}" alt="{{ $item->product->name }}" width="100"></td>
+                                <td>{{ $item->product->getPrice() }} €</td>
+                                <td>{{ $item->quantity ?? 0 }}</td>
                                 <td>
-                                    <form action="{{ route('carrito.remove', $product->id) }}" method="POST" style="display: inline;">
+                                    
+                                    <form action="{{ route('carrito.remove', ['productId' => $item->product_id]) }}" method="POST" style="display: inline;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger">Quitar</button>

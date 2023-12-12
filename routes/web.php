@@ -41,8 +41,9 @@ Route::group(['middleware' => 'vendor'], function () {
 
 Route::group(['middleware' => 'comprador'], function () {
     Route::get('/carrito', [App\Http\Controllers\CarritoController::class, 'index'])->name('carrito');
-    Route::post('/carrito/add/{product}', [App\Http\Controllers\CarritoController::class, 'add'])->name('carrito.add');
-    Route::delete('/carrito/remove/{product}', [App\Http\Controllers\CarritoController::class, 'remove'])->name('carrito.remove');
+    Route::post('/carrito/add/{productStock}', [App\Http\Controllers\CarritoController::class, 'addToCart'])->name('carrito.addToCart');
+    //Route::post('/carrito/add/{product}', [App\Http\Controllers\CarritoController::class, 'add'])->name('carrito.add');
+    Route::delete('/carrito/remove/{productStock}', [App\Http\Controllers\CarritoController::class, 'remove'])->name('carrito.remove');
     Route::get('/checkout', [App\Http\Controllers\CheckoutController::class, 'showCheckoutForm'])->name('checkout');
     Route::post('/process_checkout', [App\Http\Controllers\CheckoutController::class, 'process'])->name('process_checkout');
 
