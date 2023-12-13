@@ -49,7 +49,7 @@
     document.getElementById('image').addEventListener('change', function(e) {
         var file = this.files[0];
         var fileType = file["type"];
-        var validImageTypes = ["image/gif", "image/jpeg", "image/png"];
+        var validImageTypes = ["image/gif", "image/jpeg", "image/png", "image/webp"];
         if (!validImageTypes.includes(fileType)) {
             alert('Por favor, selecciona una imagen válida.');
             this.value = '';

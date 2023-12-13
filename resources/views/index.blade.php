@@ -43,7 +43,7 @@
                                     @endif
                                 @endif
                                 @if (Auth::user()->role_id == 2)
-                                     <button type="button" id="AddStock" class="btn btn-primary">Añadir stock</button>
+                                    <button type="button" class="btn btn-primary btn-sm open-modal" data-toggle="modal" data-target="#myModal" data-id="{{ $product->id }}">Añadir stock</button>
                                 @endif
                                 @endauth
 
@@ -64,8 +64,10 @@
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="{{ route('products.addStock', $product->id) }}" method="POST">
+                                    
+                                    <form action="{{ route('products.addStock') }}" method="POST">
                                         @csrf
+                                        <input type="hidden" id="product_id" name="product_id" value=""/>
                                         <div class="mb-3">
                                             <label for="amount" class="form-label">Cantidad</label>
                                             <p>En caso de que usted ya tenga subido stock, la cantidad de artículos se
@@ -96,10 +98,23 @@
     </html>
     <script defer>
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('AddStock').addEventListener('click', function() {
-                var myModal = new bootstrap.Modal(document.getElementById('addStockModal'), {});
-                myModal.show();
+            var buttons = document.querySelectorAll('.open-modal');
+
+            buttons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    
+                    var productId = this.getAttribute('data-id');
+                    console.log(productId);
+                    var input = document.querySelector('.modal-body #product_id');
+                    input.value = productId;
+                    var myModal = new bootstrap.Modal(document.getElementById('addStockModal'), {});
+                    myModal.show();
+                });
+
+
             });
+
+            
         });
     </script>
 @endsection

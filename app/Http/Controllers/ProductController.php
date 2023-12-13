@@ -41,10 +41,12 @@ class ProductController extends Controller
         return view('products.create', compact('categories'));
     }
 
-    public function addStock($productId, Request $request)
+    public function addStock(Request $request)
     {
+        $productId = $request->input('product_id');
         $amount = $request->input('amount');
         $price = $request->input('price');
+
         //refresh the page calling product show
 
         $product = Product::findOrFail($productId);
@@ -54,7 +56,11 @@ class ProductController extends Controller
         
         if ($productStock) {
             $productStock->amount += $amount;
-            $productStock->unit_price = $price;
+            //only change price if the price is not empty or 0
+            if ($price) {
+                $productStock->unit_price = $price;
+            }
+            //$productStock->unit_price = $price;
             $productStock->save();
         } else {
             $productStock = new ProductStock([
@@ -78,7 +84,7 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required',
             'description' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'amount' => 'required|numeric',
             'unit_price' => 'required|numeric',
         ]);
