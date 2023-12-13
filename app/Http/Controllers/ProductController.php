@@ -134,7 +134,6 @@ class ProductController extends Controller
     {
         $product->productStocks()->delete();
 
-        // Now, delete the product
         $product->delete();
 
         return redirect()->route('myprods')->with('success', 'Producto eliminado con éxito.');

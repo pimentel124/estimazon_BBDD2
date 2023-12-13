@@ -70,14 +70,14 @@
                                     <a class="dropdown-item" href="{{ route('perfil') }}">Mi cuenta</a>
                                     @if(Auth::user()->role_id == 2)
                                     <a class="dropdown-item" href="{{ route('subir_producto') }}">Añadir producto</a>
-                                    <a class="dropdown-item" href="{{ route('myprods') }}">Mis productos</a>
-                                    <a class="dropdown-item" href="{{ route('pedidos') }}">Pedidos</a>
+                                    <a class="dropdown-item" href="{{ route('myprods') }}">Modificar/Eliminar producto</a>
+                                    <a class="dropdown-item" href="{{ route('pedidos') }}">Ventas</a>
                                     @endif
                                     @if(Auth::user()->role_id == 3)
-                                    <a class="dropdown-item" href="{{ route('controlador') }}">Controlador de pedidos</a>
+                                    <a class="dropdown-item" href="{{ route('controlador') }}">Controlador</a>
                                     @endif
                                     @if(Auth::user()->role_id == 4)
-                                    <a class="dropdown-item" href="{{ route('repartidor') }}">Repartidor</a>
+                                    <a class="dropdown-item" href="{{ route('repartidor') }}">Reparto</a>
                                     @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
