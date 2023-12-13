@@ -70,6 +70,41 @@ class PedidoController extends Controller
         return view('incidencia', ['pedido' => $pedido]);
     }
 
+    public function updateStatus(Request $request, Order $pedido)
+    {
+        // Validación de datos de entrada (puedes personalizar según tus necesidades)
+        $request->validate([
+            'status' => 'required|string',
+        ]);
+
+        // Asegúrate de que el nuevo estado sea válido
+        $nuevoEstado = $request->input('status');
+        $estadosValidos = ['cart', 'confirmed', 'to_center', 'delivering', 'recieved', 'alt_recieved', 'refused', 'returned'];
+        if (!in_array($nuevoEstado, $estadosValidos)) {
+            // Si el nuevo estado no es válido, puedes manejarlo según tus necesidades (por ejemplo, devolver un mensaje de error)
+            return back()->with('error', 'Estado no válido');
+        }
+
+        // Actualizar el estado del pedido
+        $pedido->update(['status' => $nuevoEstado]);
+
+        // Incrementar el número de intentos si el nuevo estado es 'refused'
+        if ($nuevoEstado === 'refused') {
+            $pedido->increment('tries');
+
+            // Verificar si el número de intentos ha llegado a 3 y cambiar el estado a 'returned'
+            if ($pedido->tries >= 3) {
+                $pedido->update(['status' => 'returned']);
+            }
+        }
+
+        // Puedes realizar otras acciones necesarias según el nuevo estado aquí
+
+        // Devolver a la misma página de detalles del pedido con un mensaje de éxito
+        return back()->with('success', 'Estado actualizado con éxito.');
+    }
+
+
 
     public function almacenarIncidencia(Request $request, Order $pedido)
     {

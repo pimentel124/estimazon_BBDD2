@@ -12,10 +12,11 @@ class RepartidorController extends Controller
 {
     public function index()
     {
-        // Obtener los OrderItems relacionados con el vendor
-        $orderItems = OrderItem::with('order')->get();
-        // Pasar los OrderItems con los días restantes a la vista
-        return view('repartiment', ['pedidos' => $orderItems]);
+        // Obtener los pedidos con información de productos
+        $orders = Order::with('items.product', 'items.vendor')->get();
+
+        // Pasar los pedidos con los días restantes a la vista
+        return view('repartiment', ['pedidos' => $orders]);
     }
 
 }

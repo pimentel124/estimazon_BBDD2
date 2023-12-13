@@ -58,6 +58,8 @@ Route::group(['middleware' => 'controlador'], function () {
 
 Route::group(['middleware' => 'repartidor'], function () {
     Route::get('/repartidor', [App\Http\Controllers\RepartidorController::class, 'index'])->name('repartidor');
+    Route::get('/pedidos/{pedido}/incidencia', [App\Http\Controllers\PedidoController::class, 'mostrarIncidencia'])->name('pedidos.incidencia');
+    Route::put('/pedidos/{pedido}/update-status', [App\Http\Controllers\PedidoController::class, 'updateStatus'])->name('pedidos.updateStatus');
 });
 
 Route::get('/products/show/{id}', [App\Http\Controllers\ProductController::class, 'show'])->name('products.show');
@@ -66,7 +68,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/getMunicipiosByProvince/{provinceId}', [App\Http\Controllers\CheckoutController::class, 'getMunicipiosByProvince']);
 Route::get('/pedidos/{pedido}', [App\Http\Controllers\ControladorController::class, 'show'])->name('pedidos.show');
 
-Route::get('/pedidos/{pedido}/incidencia', [App\Http\Controllers\PedidoController::class, 'mostrarIncidencia'])->name('pedidos.incidencia');
 Route::post('/pedidos/{pedido}/incidencias', [App\Http\Controllers\PedidoController::class, 'almacenarIncidencia'])->name('pedidos.incidencias.store');
 
 
