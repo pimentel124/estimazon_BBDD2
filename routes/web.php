@@ -52,6 +52,8 @@ Route::group(['middleware' => 'comprador'], function () {
 Route::group(['middleware' => 'controlador'], function () {
     Route::get('/controlador', [App\Http\Controllers\ControladorController::class, 'index'])->name('controlador');
     Route::get('/avisar/{vendedorId}', [App\Http\Controllers\PedidoController::class, 'avisar'])->name('avisar');
+    Route::put('/guardar-envio/{orderId}', [App\Http\Controllers\ControladorController::class, 'guardarEnvio'])->name('guardar-envio');
+
 });
 
 Route::group(['middleware' => 'repartidor'], function () {

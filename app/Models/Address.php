@@ -16,9 +16,4 @@ public function municipio()
     return $this->belongsTo(Municipio::class, 'municipe_id');
 }
 
-public function provincia()
-{
-    return $this->belongsTo(Province::class, 'province_id');
-}
-
 }

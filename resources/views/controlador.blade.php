@@ -1,3 +1,5 @@
+<!-- controlador.blade.php -->
+
 @extends('layouts.app')
 
 @section('content')
@@ -9,8 +11,7 @@
                     <thead>
                         <tr>
                             <th>Producto</th>
-                            <th>Cantidad</th>
-                            <th>Vendedor</th>
+                            <th>Vendedores</th>
                             <th>Tiempo transcurrido</th>
                             <th>Acciones</th>
                         </tr>
@@ -18,21 +19,44 @@
                     <tbody>
                         @foreach($pedidos as $pedido)
                             <tr>
-                                <td>{{ $pedido->product->name }}</td>
-                                <td>{{ $pedido->quantity }}</td>
-                                <td>{{ $pedido->vendor->full_name }}</td>
+                                <td>
+                                    @foreach($pedido->items as $item)
+                                        {{ $item->product->name }}<br>
+                                    @endforeach
+                                </td>
+                                <td>
+                                    @php
+                                        $vendedores = [];
+                                    @endphp
+
+                                    @foreach($pedido->items as $item)
+                                        @php
+                                            $vendedorId = $item->vendor->id;
+                                            $vendedorNombre = $item->vendor->full_name;
+                                            // Verifica si el vendedor ya ha sido agregado
+                                            if (!in_array($vendedorId, array_column($vendedores, 'id'))) {
+                                                $vendedores[] = ['id' => $vendedorId, 'nombre' => $vendedorNombre];
+                                            }
+                                        @endphp
+                                    @endforeach
+
+                                    @foreach($vendedores as $vendedor)
+                                        {{ $vendedor['nombre'] }}<br>
+                                    @endforeach
+                                </td>
                                 <td>{{ $pedido->dias_restantes }} días</td>
                                 <td>
-                                    <!-- Verifica si el estado es "sent" y cambia el botón en consecuencia -->
-                                    @if ($pedido->order->status == 'sent')
-                                        <span class="btn btn-success disabled">Enviado</span>
-                                        <a href="{{ route('pedidos.show', ['pedido' => $pedido->order_id]) }}" class="btn btn-warning">Completar</a>
-                                    @else
+                                    <!-- Verifica el estado y muestra los botones en consecuencia -->
+                                    @if ($pedido->status == 'confirmed')
                                     <span class="btn btn-primary disabled">Pendiente</span>
-
                                         @if ($pedido->dias_restantes >= 5)
-                                        <a href="{{ route('avisar', ['vendedorId' => $pedido->vendor->id]) }}" class="btn btn-warning">Avisar</a>
+                                            @foreach($vendedores as $vendedor)
+                                                <a href="{{ route('avisar', ['vendedorId' => $vendedor['id']]) }}" class="btn btn-warning">Avisar a {{ $vendedor['nombre'] }}</a>
+                                            @endforeach
                                         @endif
+                                    @else
+                                        <span class="btn btn-success disabled">En proceso</span>
+                                        <a href="{{ route('pedidos.show', ['pedido' => $pedido->id]) }}" class="btn btn-warning">Completar</a>
                                     @endif
                                 </td>
                             </tr>

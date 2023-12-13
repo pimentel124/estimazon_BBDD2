@@ -57,9 +57,9 @@ class CheckoutController extends Controller
         $address->save();
 
         // Crea una nueva orden y asocia la dirección
-        $order = new Order();
+        $order = Order::where('user_id', Auth::id())->where('status', 'cart')->first();
         $order->user_id = Auth::id();
-        $order->status = 'pending';
+        $order->status = 'confirmed';
         $order->delivery_address = $address->id; // Asocia la dirección con la orden
         $order->save();
 

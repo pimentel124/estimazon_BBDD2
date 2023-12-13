@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+<div class="container" style="min-height: 120vh;">
         <div class="row">
             <div class="col-md-12">
                 <h1>Detalle del Pedido</h1>
@@ -27,16 +27,22 @@
                         <br>
                     @endforeach
                 </ul>
-                <div class="form-group mb-3">
-                    <label for="provincia">Empresa distribuidora:</label>
-                    <select class="form-control" id="provincia" name="provincia" required>
-                        <option value="">Selecciona provincia</option>
-                        @foreach($provincias as $provincia)
-                            <option value="{{ $provincia->id }}">{{ $provincia->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <a href="{{ route('index') }}" class="btn btn-primary">Volver</a>
+                <form action="{{ route('guardar-envio', ['orderId' => $pedido->id]) }}" method="post">
+                    @csrf
+                    @method('put')
+
+                    <div class="form-group mb-3">
+                        <label for="empresa">Empresa distribuidora:</label>
+                        <select class="form-control" id="empresa" name="empresa" required>
+                            <option value="">Selecciona empresa</option>
+                            @foreach($empresas as $empresa)
+                                <option value="{{ $empresa->id }}">{{ $empresa->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </form>
             </div>
         </div>
     </div>
