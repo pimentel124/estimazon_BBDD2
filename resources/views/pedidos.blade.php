@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>Pedidos</h1>
+                <h1>Ventas</h1>
                 <table class="table">
                     <thead>
                         <tr>

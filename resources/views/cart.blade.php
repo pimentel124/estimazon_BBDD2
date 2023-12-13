@@ -1,5 +1,3 @@
-<!-- cart.blade.php -->
-
 @extends('layouts.app')
 
 @section('content')
@@ -8,7 +6,7 @@
 <head>
 </head>
 <body>
-    <div class="container">
+    <div class="container" style="min-height: 100vh;">
         <div class="row">
             <div class="col-md-12">
                 <h1>Carrito</h1>
@@ -24,6 +22,9 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php
+                            $totalPrice = 0;
+                        @endphp
                         @foreach($order_items as $item)
                             <tr>
                                 <td>{{ $item->product->name}}</td>
@@ -32,19 +33,21 @@
                                 <td>{{ $item->product->getPrice($item->vendor_id) }} €</td>
                                 <td>{{ $item->quantity ?? 0 }}</td>
                                 <td>
-                                    <form action="{{ route('carrito.remove', ['productStock' => $item->product_id]) }}" method="POST" style="display: inline;">
+                                    <form action="{{ route('carrito.remove', ['productStock' => $item->id]) }}" method="POST" style="display: inline;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger">Quitar</button>
                                     </form>
                                 </td>
                             </tr>
+                            @php
+                                $totalPrice += $item->product->getPrice($item->vendor_id) * ($item->quantity ?? 0);
+                            @endphp
                         @endforeach
                     </tbody>
                 </table>
-
-                <!-- "Pagar" button -->
                 <div class="text-center">
+                    <h4>Precio total: {{ $totalPrice }} €</h4>
                     <a href="{{ route('checkout') }}" class="btn btn-primary">Pagar</a>
                 </div>
             </div>

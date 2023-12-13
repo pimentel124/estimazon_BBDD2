@@ -111,14 +111,12 @@ class CarritoController extends Controller
 
     public function remove($orderItemId){
         $orderItem = OrderItem::find($orderItemId);
-        
-            if($orderItem) {
+
                 $orderItem->delete();
                 return redirect()->route('carrito')->with('success', 'Product removed from the cart successfully.');
-            }
 
-        
-        return redirect()->route('carrito')->with('500', 'Product not removed from the cart.');
+
+
     }
 
     /*

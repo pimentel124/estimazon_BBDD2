@@ -29,7 +29,6 @@
                                 <h5>Vendor: {{ $product->vendor_name }}</h5>
                                 <p>{{ $product->description }}</p>
                                 <p>{{ $product->price }} €</p>
-
                                 <form action="{{ route('carrito.addToCart', $product->product_stockId) }}" method="POST">
                                     @csrf
                                     <button type="submit" class="btn btn-primary">Add to cart</button>

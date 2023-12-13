@@ -27,35 +27,15 @@
                     <h5>Vendor: {{ $firstProductStock->vendor->full_name }}</h5>
                     <p>{{ $product->description }}</p>
                     <p>{{ $firstProductStock->unit_price }} €</p>
-
-                    <form action="{{ route('carrito.addToCart', $firstProductStock->id) }}" method="POST">
-                        @csrf
-                        <button type="submit" class="btn btn-primary">Add to cart</button>
-                    </form>
-
+                    @if(Auth::user()->role_id == 2)
+                        <form action="{{ route('carrito.addToCart', $firstProductStock->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-primary">Add to cart</button>
+                        </form>
+                    @endif
                 </div>
-            </div>
-
-            <!-- Display other vendors -->
-            <div class="row m-5">
-                <div class="row">
-                    <h2>Otros Vendedores</h2>
-                </div>
-                @foreach ($product->productStocks->skip(1) as $stock)
-                <div class="row d-flex row-height p-1">
-                    <h5>Vendido por: {{ $stock->vendor->full_name }}</h5>
-                    <p>{{ $stock->unit_price }} €</p>
-                    <form action="{{ route('carrito.addToCart', ['productStock' => $stock->id, 'vendor_id' => $stock->vendor_id]) }}" method="POST">
-                        @csrf
-                        <button type="submit" class="btn btn-primary">Add to cart</button>
-                    </form>
-                </div>
-                <hr>
-                @endforeach
             </div>
         </div>
-
     </body>
-
     </html>
 @endsection
