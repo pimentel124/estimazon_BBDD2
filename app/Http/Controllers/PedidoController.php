@@ -47,7 +47,7 @@ class PedidoController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        $pedido->order->update(['status' => 'sent']);
+        $pedido->order->update(['status' => 'to_center']);
 
         // Puedes realizar cualquier otra lógica necesaria aquí
 
