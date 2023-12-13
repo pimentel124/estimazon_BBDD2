@@ -10,8 +10,9 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Producto</th>
-                            <th>Vendedores</th>
+                            <th>Nº Pedido</th>
+                            <th>Producto/s</th>
+                            <th>Vendedor/es</th>
                             <th>Tiempo transcurrido</th>
                             <th>Acciones</th>
                         </tr>
@@ -19,6 +20,8 @@
                     <tbody>
                         @foreach($pedidos as $pedido)
                             <tr>
+                            <td>{{ $pedido->id }}</td>
+
                                 <td>
                                     @foreach($pedido->items as $item)
                                         {{ $item->product->name }}<br>
