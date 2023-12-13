@@ -29,10 +29,20 @@
                                 <h5>Vendor: {{ $product->vendor_name }}</h5>
                                 <p>{{ $product->description }}</p>
                                 <p>{{ $product->price }} €</p>
+                                @if(Auth::user()->role_id == 1)
+                                    @if (Route::has('carrito'))
                                 <form action="{{ route('carrito.addToCart', $product->product_stockId) }}" method="POST">
                                     @csrf
                                     <button type="submit" class="btn btn-primary">Add to cart</button>
                                 </form>
+                                @endif
+                            @endif
+                                @if(Auth::user()->role_id == 2)
+                                <form action="{{ route('carrito.addToCart', $product->product_stockId) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-primary">Sell this product</button>
+                                </form>
+                            @endif
 
                             </div>
                         </div>
