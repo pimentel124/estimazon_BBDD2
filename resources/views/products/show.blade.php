@@ -45,7 +45,7 @@
                 <div class="row d-flex row-height p-1">
                     <h5>Vendido por: {{ $stock->vendor->full_name }}</h5>
                     <p>{{ $stock->unit_price }} €</p>
-                    <form action="{{ route('carrito.addToCart', ['productStock' => $product->id, 'vendor_id' => $stock->vendor_id]) }}" method="POST">
+                    <form action="{{ route('carrito.addToCart', ['productStock' => $stock->id, 'vendor_id' => $stock->vendor_id]) }}" method="POST">
                         @csrf
                         <button type="submit" class="btn btn-primary">Add to cart</button>
                     </form>

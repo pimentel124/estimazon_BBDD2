@@ -38,6 +38,7 @@ class CarritoController extends Controller
         return view('cart', ['order_items' => $order->items]);
     }
 
+    /*
     public function add($id, Request $request, $vendor_id = null)
     {
         // Retrieve the product based on the provided $productId
@@ -81,7 +82,7 @@ class CarritoController extends Controller
 
         return redirect()->back()->with('success', 'Product added to the cart successfully.');
     }
-
+*/
     public function addToCart($productStockId, $amount = 1){
 
         $productStock = ProductStock::find($productStockId);
@@ -108,21 +109,16 @@ class CarritoController extends Controller
     }
 
 
-    public function remove($productStockId){
-        $productStock = ProductStock::find($productStockId);
-        $order = Order::where('user_id', Auth::user()->id)->where('status', 'cart')->first();
-
-        if($order) {
-            $orderItem = $order->items()->where('product_id', $productStock->product_id)
-                                        ->where('vendor_id', $productStock->vendor_id)
-                                        ->first();
+    public function remove($orderItemId){
+        $orderItem = OrderItem::find($orderItemId);
+        
             if($orderItem) {
                 $orderItem->delete();
                 return redirect()->route('carrito')->with('success', 'Product removed from the cart successfully.');
             }
 
-        }
-        return redirect()->route('carrito')->with('500', 'Product removed from the cart successfully.');
+        
+        return redirect()->route('carrito')->with('500', 'Product not removed from the cart.');
     }
 
     /*
