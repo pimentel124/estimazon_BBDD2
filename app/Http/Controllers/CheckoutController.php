@@ -6,9 +6,10 @@ use App\Models\Province;
 use App\Models\Address;
 use App\Models\Order;
 use App\Models\OrderItem;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
-use Auth;
+
 
 
 class CheckoutController extends Controller
@@ -53,12 +54,12 @@ class CheckoutController extends Controller
         $address->direction = $direccion;
         $address->number = $numero;
         $address->floor = $piso;
-        $order->user_id = Auth::id();
+        $address->user_id = Auth::user()->id;
         $address->save();
 
         // Crea una nueva orden y asocia la dirección
-        $order = Order::where('user_id', Auth::id())->where('status', 'cart')->first();
-        $order->user_id = Auth::id();
+        $order = Order::where('user_id', Auth::user()->id)->where('status', 'cart')->first();
+        $order->user_id = Auth::user()->id;
         $order->status = 'confirmed';
         $order->delivery_address = $address->id; // Asocia la dirección con la orden
         $order->save();

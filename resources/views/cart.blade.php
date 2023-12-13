@@ -29,7 +29,7 @@
                                 <td>{{ $item->product->name}}</td>
                                 <td>{{ $item->product->description }}</td>
                                 <td><img src="{{ asset('storage/uploads/' . basename($item->product->image_url)) }}" alt="{{ $item->product->name }}" width="100"></td>
-                                <td>{{ $item->product->getPrice() }} €</td>
+                                <td>{{ $item->product->getPrice($item->vendor_id) }} €</td>
                                 <td>{{ $item->quantity ?? 0 }}</td>
                                 <td>
                                     <form action="{{ route('carrito.remove', ['productStock' => $item->product_id]) }}" method="POST" style="display: inline;">
