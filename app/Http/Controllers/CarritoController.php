@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Log;
 
 class CarritoController extends Controller
 {
-    
+
     /*
     public function index(Request $request)
     {
@@ -29,7 +29,7 @@ class CarritoController extends Controller
                       ->where('user_id', Auth::user()->id)
                       ->where('status', 'cart')
                       ->first();
-        
+
         if (!$order) {
             //return and empty cart
             return view('cart', ['order_items' => [] ]);
@@ -96,7 +96,6 @@ class CarritoController extends Controller
             $order->status = 'cart';
             $order->save();
         }
-        
         //create a OrderItem with the productStockId and the amount
         $orderItem = new OrderItem();
         $orderItem->product_id = $productStock->product_id;
@@ -104,6 +103,7 @@ class CarritoController extends Controller
         $orderItem->vendor_id = $productStock->vendor_id;
         $orderItem->order_id = $order->id;
         $orderItem->save();
+        return redirect()->route('carrito')->with('success', 'Product added to the cart successfully.');
 
     }
 

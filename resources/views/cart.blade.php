@@ -32,8 +32,7 @@
                                 <td>{{ $item->product->getPrice() }} €</td>
                                 <td>{{ $item->quantity ?? 0 }}</td>
                                 <td>
-                                    
-                                    <form action="{{ route('carrito.remove', ['productId' => $item->product_id]) }}" method="POST" style="display: inline;">
+                                    <form action="{{ route('carrito.remove', ['productStock' => $item->product_id]) }}" method="POST" style="display: inline;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger">Quitar</button>

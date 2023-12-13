@@ -53,6 +53,7 @@ class CheckoutController extends Controller
         $address->direction = $direccion;
         $address->number = $numero;
         $address->floor = $piso;
+        $order->user_id = Auth::id();
         $address->save();
 
         // Crea una nueva orden y asocia la dirección
