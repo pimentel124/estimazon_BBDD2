@@ -24,7 +24,7 @@
                                 <td>{{ $pedido->dias_restantes }} días</td>
                                 <td>
                                     <!-- Verifica si el estado es "sent" y cambia el botón en consecuencia -->
-                                    @if ($pedido->order->status == 'sent')
+                                    @if ($pedido->order->status == 'to_center')
                                         <span class="btn btn-success disabled">Enviado</span>
                                     @else
                                         <!-- Si no es "sent", muestra el botón "Enviar" como antes -->
