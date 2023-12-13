@@ -104,16 +104,22 @@ class ProductController extends Controller
             'name' => 'required',
             'description' => 'required',
             'price' => 'required',
+            'image' => 'required',
+            'amount' => 'required',
         ]);
+
+        $imagePath = $request->file('image')->store('uploads', 'public');
 
         $product->update([
             'name' => $request->input('name'),
             'description' => $request->input('description'),
+            'image_url' => $imagePath,
         ]);
 
         foreach ($product->productStocks as $productStock) {
             $productStock->update([
                 'unit_price' => $request->input('price'),
+                'amount' => $request->input('amount'),
             ]);
         }
 

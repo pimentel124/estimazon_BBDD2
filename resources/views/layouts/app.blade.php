@@ -69,7 +69,7 @@
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('perfil') }}">Mi cuenta</a>
                                     @if(Auth::user()->role_id == 2)
-                                    <a class="dropdown-item" href="{{ route('subir_producto') }}">Subir producto</a>
+                                    <a class="dropdown-item" href="{{ route('subir_producto') }}">Añadir producto</a>
                                     <a class="dropdown-item" href="{{ route('myprods') }}">Mis productos</a>
                                     <a class="dropdown-item" href="{{ route('pedidos') }}">Pedidos</a>
                                     @endif

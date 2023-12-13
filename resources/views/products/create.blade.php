@@ -41,7 +41,7 @@
                 <input type="file" name="image" id="image" class="form-control-file" required>
             </div>
 
-            <button type="submit" class="btn btn-primary">Subir Producto</button>
+            <button type="submit" class="btn btn-primary">Añadir producto</button>
         </form>
     </div>
 @endsection

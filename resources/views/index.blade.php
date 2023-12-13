@@ -12,14 +12,6 @@
 
         <div class="container-fluid">
             <div class="row">
-                <div class="col-3 bg-light sidebar">
-                    <h2>Categories</h2>
-                    <ul class="list-unstyled">
-                        <li><a href="#">Category 1</a></li>
-                        <li><a href="#">Category 2</a></li>
-                        <!-- Add more categories as needed -->
-                    </ul>
-                </div>
                 <div class="col-9">
                     @foreach ($products as $product)
                         <div class="row d-flex row-height p-1">
