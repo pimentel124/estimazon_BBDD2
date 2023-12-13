@@ -44,4 +44,17 @@
             <button type="submit" class="btn btn-primary">Añadir producto</button>
         </form>
     </div>
+<script>
+
+    document.getElementById('image').addEventListener('change', function(e) {
+        var file = this.files[0];
+        var fileType = file["type"];
+        var validImageTypes = ["image/gif", "image/jpeg", "image/png"];
+        if (!validImageTypes.includes(fileType)) {
+            alert('Por favor, selecciona una imagen válida.');
+            this.value = '';
+        }
+    });
+    
+</script>
 @endsection

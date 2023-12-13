@@ -41,6 +41,33 @@ class ProductController extends Controller
         return view('products.create', compact('categories'));
     }
 
+    public function addStock($productId, $amount, $price)
+    {
+        //refresh the page calling product show
+
+        $product = Product::findOrFail($productId);
+
+        //check if the user already has a stock for this product
+        $productStock = ProductStock::where('product_id', $productId)->where('vendor_id', auth()->id())->first();
+        
+        if ($productStock) {
+            $productStock->amount += $amount;
+            $productStock->unit_price = $price;
+            $productStock->save();
+        } else {
+            $productStock = new ProductStock([
+                'amount' => $amount,
+                'unit_price' => $price,
+                'vendor_id' => auth()->id(),
+            ]);
+            $product->productStocks()->save($productStock);
+        }
+
+        //redirect to route show the new stock
+
+        return redirect()->route('products.show', $productId)->with('success', 'Stock añadido con éxito.');
+    }
+
     /**
      * Store a newly created resource in storage.
      */
