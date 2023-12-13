@@ -28,5 +28,7 @@ php artisan migrate
 
 ```bash
 npm run build
+
+php artisan storage:link
 php artisan serve
 ```

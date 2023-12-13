@@ -12,13 +12,12 @@
 
         <div class="container-fluid">
             <div class="row">
-                <div class="col-9">
+                <div class="col-12">
                     @foreach ($products as $product)
-                        <div class="row d-flex row-height p-1">
+                        <div class="row mx-5 my-2 p-3 bg-light border rounded-2">
                             <div class="col-4 flex-fill">
-                                <div class="image-tab">
-                                    <img src="{{ asset('storage/uploads/' . basename($product->image_url)) }}"
-                                        alt="{{ $product->name }}" width="100">
+                                <div class="product-image-container">
+                                    <img class="product-image" src="{{ asset('storage/uploads/' . basename($product->image_url)) }}" alt="{{ $product->name }}">
                                 </div>
                             </div>
                             <div class="col-8 flex-fill">
@@ -28,30 +27,66 @@
                                         {{ $product->name }}
                                     </a>
                                 </h3>
-                                <h5>Vendor: {{ $product->vendor_name }}</h5>
-                                <p>{{ $product->description }}</p>
+                                <h5>Vendedor: {{ $product->vendor_name }}</h5>
+                                <p class="text-wrap">{{ $product->description }}</p>
                                 <p>{{ $product->price }} €</p>
+                                @auth
+                                    
+                                
                                 @if (Auth::user()->role_id == 1)
                                     @if (Route::has('carrito'))
                                         <form action="{{ route('carrito.addToCart', $product->product_stockId) }}"
                                             method="POST">
                                             @csrf
-                                            <button type="submit" class="btn btn-primary">Add to cart</button>
+                                            <button type="submit" class="btn btn-primary">Añadir al carrito</button>
                                         </form>
                                     @endif
                                 @endif
                                 @if (Auth::user()->role_id == 2)
-                                    <form action="{{ route('carrito.addToCart', $product->product_stockId) }}"
-                                        method="POST">
-                                        @csrf
-                                        <button type="submit" class="btn btn-primary">Sell this product</button>
-                                    </form>
+                                     <button type="button" id="AddStock" class="btn btn-primary">Añadir stock</button>
                                 @endif
+                                @endauth
 
                             </div>
                         </div>
-                        <hr>
+                        
                     @endforeach
+                    @auth
+                    @if (Auth::user()->role_id == 2)
+                    <!-- Modal -->
+                    <div class="modal fade" id="addStockModal" tabindex="-1" aria-labelledby="addStockModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addStockModalLabel">Añadir stock</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{ route('products.addStock', $product->id) }}" method="POST">
+                                        @csrf
+                                        <div class="mb-3">
+                                            <label for="amount" class="form-label">Cantidad</label>
+                                            <p>En caso de que usted ya tenga subido stock, la cantidad de artículos se
+                                                sumará a la ya existente</p>
+                                            <input type="number" class="form-control" id="amount" name="amount">
+                                        </div>
+                                        <div class="mb-3">
+
+                                            <label for="price" class="form-label">Precio</label>
+                                            <p>En caso de que usted ya tenga subido stock, el precio será sobreescrito</p>
+                                            <input type="number" class="form-control" id="price" name="price">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Añadir stock</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+                    @endauth
+
                 </div>
             </div>
         </div>
@@ -59,4 +94,12 @@
     </body>
 
     </html>
+    <script defer>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('AddStock').addEventListener('click', function() {
+                var myModal = new bootstrap.Modal(document.getElementById('addStockModal'), {});
+                myModal.show();
+            });
+        });
+    </script>
 @endsection

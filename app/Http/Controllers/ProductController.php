@@ -41,8 +41,10 @@ class ProductController extends Controller
         return view('products.create', compact('categories'));
     }
 
-    public function addStock($productId, $amount, $price)
+    public function addStock($productId, Request $request)
     {
+        $amount = $request->input('amount');
+        $price = $request->input('price');
         //refresh the page calling product show
 
         $product = Product::findOrFail($productId);
@@ -81,8 +83,13 @@ class ProductController extends Controller
             'unit_price' => 'required|numeric',
         ]);
 
-        // Sube la imagen y obtén la ruta
+        // Sube la imagen a storage/app/public/images publicly
+
         $imagePath = $request->file('image')->store('uploads', 'public');
+        
+        //how to access the image via url in blade
+        // <img src="{{ asset('storage/' . $product->image_url) }}" alt="">
+
 
         // Crea un nuevo producto y almacena la ruta de la imagen en la base de datos
         $product = new Product([
