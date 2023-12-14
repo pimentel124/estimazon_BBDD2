@@ -9,7 +9,7 @@ class OrderItem extends Model
     protected $primaryKey = 'id';
     public $timestamps = false;
     protected $table = 'order_items';
-    protected $fillable = ['product_id', 'quantity', 'vendor_id'];
+    protected $fillable = ['product_id', 'quantity', 'vendor_id', 'enviado'];
 
     public function product()
     {

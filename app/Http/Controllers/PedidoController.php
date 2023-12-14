@@ -38,21 +38,24 @@ class PedidoController extends Controller
     public function enviar(Request $request, $pedidoId)
     {
         // Recuperar el pedido basado en el ID proporcionado
-        $pedido = OrderItem::where('order_id', $pedidoId)->firstOrFail();
-
-        // Verificar si el usuario autenticado tiene permiso para enviar este pedido
+        $pedido = OrderItem::where('id', $pedidoId)->firstOrFail();
+        // Verificar si el usuario autenticado es un vendedor y tiene permiso para enviar este pedido
         $userId = Auth::id();
-        if ($pedido->vendor_id !== $userId) {
-            // El usuario no tiene permiso para enviar este pedido
-            abort(403, 'Unauthorized action.');
+        if ($pedido->vendor_id == $userId) {
+            // Actualizar el campo "enviado" a true
+            $pedido->update(['enviado' => true]);
+            $todosEnviados = $pedido->pluck('enviado')->every(function ($enviado) {
+                return $enviado == true;
+            });
+            // Si todos los items están enviados, actualizar el estado del pedido
+            if ($todosEnviados) {
+                $pedido->order->update(['status' => 'to_center']);
+            }
+            // Redirigir de vuelta a la página de pedidos con un mensaje de éxito
+            return redirect()->route('pedidos')->with('success', 'Pedido enviado con éxito.');
         }
-
-        $pedido->order->update(['status' => 'to_center']);
-
-        // Puedes realizar cualquier otra lógica necesaria aquí
-
-        // Redirigir de vuelta a la página de pedidos con un mensaje de éxito
-        return redirect()->route('pedidos')->with('success', 'Pedido enviado con éxito.');
+        // Si el usuario no tiene permiso, redirigir con un mensaje de error
+        return redirect()->route('pedidos')->with('error', 'No tienes permiso para enviar este pedido.');
     }
 
     public function avisar(Request $request, $vendedorId)

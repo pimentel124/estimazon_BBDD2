@@ -41,12 +41,12 @@ return new class extends Migration
         Schema::create('incidences', function (Blueprint $table) {
             $table->id();
             $table->string('description')->nullable();
-            
+
             $table->unsignedBigInteger('order_id')->nullable()->index('order_id');
             $table->unsignedBigInteger('product_id')->nullable()->index('product_id');
             $table->unsignedBigInteger('vendor_id')->nullable()->index('vendor_id');
             $table->unsignedBigInteger('controller_id')->nullable()->index('controller_id');
-            
+
         });
         */
 
@@ -65,6 +65,7 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id')->nullable()->index('product_id');
             $table->integer('quantity')->nullable()->default(1);
             $table->unsignedBigInteger('vendor_id')->nullable()->index('vendor_id');
+            $table->boolean('enviado')->default(false);
         });
 
         Schema::create('orders', function (Blueprint $table) {
