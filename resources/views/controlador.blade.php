@@ -20,8 +20,7 @@
                     <tbody>
                         @foreach($pedidos as $pedido)
                             <tr>
-                            <td>{{ $pedido->id }}</td>
-
+                                <td>{{ $pedido->id }}</td>
                                 <td>
                                     @foreach($pedido->items as $item)
                                         {{ $item->product->name }}<br>
@@ -36,9 +35,10 @@
                                         @php
                                             $vendedorId = $item->vendor->id;
                                             $vendedorNombre = $item->vendor->full_name;
+                                            $enviado = $item->enviado ?? false;
                                             // Verifica si el vendedor ya ha sido agregado
                                             if (!in_array($vendedorId, array_column($vendedores, 'id'))) {
-                                                $vendedores[] = ['id' => $vendedorId, 'nombre' => $vendedorNombre];
+                                                $vendedores[] = ['id' => $vendedorId, 'nombre' => $vendedorNombre, 'enviado' => $enviado];
                                             }
                                         @endphp
                                     @endforeach
@@ -51,10 +51,12 @@
                                 <td>
                                     <!-- Verifica el estado y muestra los botones en consecuencia -->
                                     @if ($pedido->status == 'confirmed')
-                                    <span class="btn btn-primary disabled">Pendiente</span>
+                                        <span class="btn btn-primary disabled">Pendiente</span>
                                         @if ($pedido->dias_restantes >= 5)
                                             @foreach($vendedores as $vendedor)
-                                                <a href="{{ route('avisar', ['vendedorId' => $vendedor['id']]) }}" class="btn btn-warning">Avisar a {{ $vendedor['nombre'] }}</a>
+                                                @if (!$vendedor['enviado'])
+                                                    <a href="{{ route('avisar', ['vendedorId' => $vendedor['id']]) }}" class="btn btn-warning">Avisar a {{ $vendedor['nombre'] }}</a>
+                                                @endif
                                             @endforeach
                                         @endif
                                     @else
