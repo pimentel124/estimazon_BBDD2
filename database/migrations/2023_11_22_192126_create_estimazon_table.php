@@ -37,18 +37,6 @@ return new class extends Migration
             $table->string('name', 100);
         });
 
-        /*
-        Schema::create('incidences', function (Blueprint $table) {
-            $table->id();
-            $table->string('description')->nullable();
-
-            $table->unsignedBigInteger('order_id')->nullable()->index('order_id');
-            $table->unsignedBigInteger('product_id')->nullable()->index('product_id');
-            $table->unsignedBigInteger('vendor_id')->nullable()->index('vendor_id');
-            $table->unsignedBigInteger('controller_id')->nullable()->index('controller_id');
-
-        });
-        */
 
         Schema::create('municipes', function (Blueprint $table) {
             $table->comment('Lista de Municipios');
@@ -81,7 +69,7 @@ return new class extends Migration
         Schema::create('product_stock', function (Blueprint $table) {
             $table->id();
             $table->integer('amount')->nullable();
-            $table->decimal('unit_price', 10)->nullable();
+            $table->decimal('unit_price', 10, 2, true)->nullable();
             $table->timestamps();
             $table->unsignedBigInteger('product_id')->nullable()->index('product_id');
             $table->unsignedBigInteger('vendor_id')->nullable()->index('vendor_id');

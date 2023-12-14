@@ -100,7 +100,7 @@
 
                                             <label for="price" class="form-label">Precio</label>
                                             <p>En caso de que usted ya tenga subido stock, el precio será sobreescrito</p>
-                                            <input type="number" class="form-control" id="price" name="price">
+                                            <input type="number" step="0.01" class="form-control" id="price" name="price">
                                         </div>
                                         <button type="submit" class="btn btn-primary">Añadir stock</button>
                                     </form>
