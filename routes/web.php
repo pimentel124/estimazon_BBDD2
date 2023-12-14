@@ -22,12 +22,6 @@ Route::get('/greeting', function () {
     return 'Hello World';
 });
 
-Route::get('/perfil', [App\Http\Controllers\PerfilController::class, 'index'])->name('perfil');
-
-Route::post('/perfil/actualizar', [App\Http\Controllers\PerfilController::class, 'actualizar'])->name('actualizar-perfil');
-
-Route::get('/', [App\Http\Controllers\ProductController::class, 'index'])->name('index');
-
 Route::group(['middleware' => 'vendor'], function () {
     Route::get('/myprods', [App\Http\Controllers\ProductController::class, 'myProducts'])->name('myprods');
     Route::get('/subir_producto', [App\Http\Controllers\ProductController::class, 'create'])->name('subir_producto');
@@ -54,7 +48,7 @@ Route::group(['middleware' => 'controlador'], function () {
     Route::get('/controlador', [App\Http\Controllers\ControladorController::class, 'index'])->name('controlador');
     Route::get('/avisar/{vendedorId}', [App\Http\Controllers\PedidoController::class, 'avisar'])->name('avisar');
     Route::put('/guardar-envio/{orderId}', [App\Http\Controllers\ControladorController::class, 'guardarEnvio'])->name('guardar-envio');
-
+    Route::get('/pedidos/{pedido}', [App\Http\Controllers\ControladorController::class, 'show'])->name('pedidos.show');
 });
 
 Route::group(['middleware' => 'repartidor'], function () {
@@ -65,10 +59,9 @@ Route::group(['middleware' => 'repartidor'], function () {
 
 Route::get('/products/show/{id}', [App\Http\Controllers\ProductController::class, 'show'])->name('products.show');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 Route::get('/getMunicipiosByProvince/{provinceId}', [App\Http\Controllers\CheckoutController::class, 'getMunicipiosByProvince']);
-Route::get('/pedidos/{pedido}', [App\Http\Controllers\ControladorController::class, 'show'])->name('pedidos.show');
-
-Route::post('/pedidos/{pedido}/incidencias', [App\Http\Controllers\PedidoController::class, 'almacenarIncidencia'])->name('pedidos.incidencias.store');
+Route::get('/perfil', [App\Http\Controllers\PerfilController::class, 'index'])->name('perfil');
+Route::post('/perfil/actualizar', [App\Http\Controllers\PerfilController::class, 'actualizar'])->name('actualizar-perfil');
+Route::get('/', [App\Http\Controllers\ProductController::class, 'index'])->name('index');
 
 
