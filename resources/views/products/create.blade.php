@@ -33,7 +33,7 @@
 
             <div class="form-group mb-3">
                 <label for="unit_price">Precio Unitario</label>
-                <input type="number" name="unit_price" id="unit_price" class="form-control" required>
+                <input type="number" name="unit_price" step="0.01" id="unit_price" class="form-control" required>
             </div>
 
             <div class="form-group mb-3">

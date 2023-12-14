@@ -82,7 +82,7 @@
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        Cerrar sesión
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -105,7 +105,7 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="py-4 mb-5">
             @yield('content')
         </main>
     </div>
@@ -113,11 +113,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <p>&copy; 2023 Estimazon. All rights reserved.</p>
+                    <p>&copy; 2023 Estimazon. Álvaro, Alejandro, Gregori.</p>
                 </div>
             </div>
         </div>
-
     </footer>
 </body>
 </html>

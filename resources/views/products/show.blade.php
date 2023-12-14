@@ -65,8 +65,7 @@
                                 action="{{ route('carrito.addToCart', ['productStock' => $stock->id, 'vendor_id' => $stock->vendor_id]) }}"
                                 method="POST">
                                 @csrf
-                                <button type="submit" class="btn btn-primary" style="max-width: 25%;">Añadir al
-                                    carrito</button>
+                                <button type="submit" class="btn btn-primary" style="max-width: 25%;">Añadir al carrito</button>
                             </form>
                         @endif
                     @endauth
@@ -94,12 +93,12 @@
                                             <label for="amount" class="form-label">Cantidad</label>
                                             <p>En caso de que usted ya tenga subido stock, la cantidad de artículos se
                                                 sumará a la ya existente</p>
-                                            <input type="number" class="form-control" id="amount" name="amount">
+                                            <input type="number" class="form-control" id="amount" name="amount" required>
                                         </div>
                                         <div class="mb-3">
 
                                             <label for="price" class="form-label">Precio</label>
-                                            <p>En caso de que usted ya tenga subido stock, el precio será sobreescrito</p>
+                                            <p>Dejar en blanco para mantener el último precio</p>
                                             <input type="number" step="0.01" class="form-control" id="price" name="price">
                                         </div>
                                         <button type="submit" class="btn btn-primary">Añadir stock</button>

@@ -25,8 +25,10 @@ class CheckoutController extends Controller
         // Obtén la lista de provincias desde el modelo Province
         $provincias = Province::all(); // Ajusta esto según tu lógica específica
 
+        $addresses = Address::where('user_id', Auth::user()->id)->with('municipio')->get();
+
         // Pasa la lista de provincias a la vista
-        return view('checkout', ['provincias' => $provincias]);
+        return view('checkout', ['provincias' => $provincias, 'addresses' => $addresses]);
     }
 
     // Puedes agregar un método adicional para cargar los municipios en función de la provincia seleccionada
@@ -48,14 +50,23 @@ class CheckoutController extends Controller
         $piso = $request->input('piso');
         $quantity = $request->input('quantity', 1); // Ajusta según tu lógica
 
+        $adressId = $request->input('address_id', -1);
         // Crea una nueva dirección
-        $address = new Address();
-        $address->municipe_id = $municipioId;
-        $address->direction = $direccion;
-        $address->number = $numero;
-        $address->floor = $piso;
-        $address->user_id = Auth::user()->id;
-        $address->save();
+        
+        $address = Address::find($adressId);
+
+
+        if (!$address)  {
+            // Crea una nueva dirección
+            $address = new Address();
+            $address->municipe_id = $municipioId;
+            $address->direction = $direccion;
+            $address->number = $numero;
+            $address->floor = $piso;
+            $address->user_id = Auth::user()->id;
+            $address->save();
+        }
+
 
         // Crea una nueva orden y asocia la dirección
         $order = Order::where('user_id', Auth::user()->id)->where('status', 'cart')->first();
@@ -64,6 +75,7 @@ class CheckoutController extends Controller
         $order->delivery_address = $address->id; // Asocia la dirección con la orden
         $order->save();
 
+        /*
         $orderId = $order->id;
         // Guarda los datos en la tabla "order_items"
         $cart = $request->session()->get('carrito', []);
@@ -76,10 +88,12 @@ class CheckoutController extends Controller
             $orderItem->vendor_id = $product->productStocks->first()->vendor_id;
             $orderItem->save();
         }
+        
 
         // Limpia el carrito después de completar el pedido
         $request->session()->forget('carrito');
 
+        */
         // Redirige a la página de confirmación u otro lugar según tu lógica
         return redirect()->route('index')->with('success', 'Pedido realizado con éxito');
     }
