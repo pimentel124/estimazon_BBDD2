@@ -14,12 +14,11 @@ use Illuminate\Support\Facades\DB;
 class ProductController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * index mostra les dades de tots els productes
      */
 
     public function index()
     {
-        //$products = Product::with('productStocks')->get();
 
         $products = DB::table('products as p')
             ->select('p.id as id', 'p.name as name', 'p.description as description', 'p.image_url as image_url', 'ps.unit_price as price', 'ps.vendor_id', 'ps.id as product_stockId', 'u.full_name as vendor_name')
@@ -33,30 +32,31 @@ class ProductController extends Controller
 
 
     /**
-     * Show the form for creating a new resource.
+     * Mostram el formulari per crear un producte
      */
     public function create()
     {
         $categories = Category::all();
         return view('products.create', compact('categories'));
     }
-
+    
+    /**
+     * Mostram un petit formulari per afegir stock d'aquell producte
+     */
     public function addStock(Request $request)
     {
         $productId = $request->input('product_id');
         $amount = $request->input('amount');
         $price = $request->input('price');
 
-        //refresh the page calling product show
-
         $product = Product::findOrFail($productId);
 
-        //check if the user already has a stock for this product
+        //Comprovam si l'usuari ja té stock per aquell producte
         $productStock = ProductStock::where('product_id', $productId)->where('vendor_id', auth()->id())->first();
 
         if ($productStock) {
             $productStock->amount += $amount;
-            //only change price if the price is not empty or 0
+            //Només canviam el preu que mostra si és empty o 0, si no ho és agafam l'anterior
             if ($price) {
                 $productStock->unit_price = $price;
             }
@@ -70,13 +70,13 @@ class ProductController extends Controller
             $product->productStocks()->save($productStock);
         }
 
-        //redirect to route show the new stock
+        //Redireccionam al show d'aquell producte
 
         return redirect()->route('products.show', $productId)->with('success', 'Stock añadido con éxito.');
     }
 
     /**
-     * Store a newly created resource in storage.
+     *Guardam el producte creat a la base de dades
      */
     public function store(Request $request)
     {
@@ -106,14 +106,14 @@ class ProductController extends Controller
             'vendor_id' => auth()->id(),
         ]);
 
-        // Save the association between Product and ProductStock
+        // Guardam la relació entre producte i producteStock
         $product->productStocks()->save($productStock);
 
         return redirect()->route('subir_producto')->with('success', 'Producto subido con éxito.');
     }
 
     /**
-     * Display the specified resource.
+     * Mostram tota la informació específica d'un producte i la dels venedores que ho venen.
      */
 
     public function show($id)
@@ -160,15 +160,10 @@ class ProductController extends Controller
 
 
     /**
-     * Remove the specified resource from storage.
+     * Eliminam un producte d'un venedor, agafant el seu id i eliminant el stock
      */
     public function destroy($productStockId)
     {
-
-        //get the stockid from the request with findOrFail
-        //delete the stock
-        //redirect to myprods with success message
-
         
         $deleteStock = ProductStock::findOrFail($productStockId);
 
