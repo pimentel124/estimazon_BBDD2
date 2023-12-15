@@ -12,7 +12,10 @@
             <h1>Bienvenido, {{ auth()->user()->full_name }}</h1>
             @if (auth()->check())
                 <p>Tipo: {{ auth()->user()->role_id == 1 ? 'Comprador' : (auth()->user()->role_id == 2 ? 'Vendedor' : 'Desconocido') }}</p>
-            @endif <!-- Resto de tu contenido de perfil -->
+            @endif
+            @if (auth()->user()->role_id == 2)
+                <p>Avisos: {{ auth()->user()->avisos }}</p>
+            @endif
                 <form method="POST" action="{{ route('actualizar-perfil') }}">
                     @csrf
 
