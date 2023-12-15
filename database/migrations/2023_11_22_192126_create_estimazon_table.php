@@ -128,15 +128,6 @@ return new class extends Migration
         });
 
 
-/*
-        Schema::table('incidences', function (Blueprint $table) {
-            $table->foreign('product_id')->references('id')->on('products')->onUpdate('NO ACTION')->onDelete('NO ACTION');
-            $table->foreign('controller_id')->references('id')->on('users')->onUpdate('NO ACTION')->onDelete('NO ACTION');
-            $table->foreign('order_id')->references('id')->on('orders')->onUpdate('NO ACTION')->onDelete('NO ACTION');
-            $table->foreign('vendor_id')->references('id')->on('users')->onUpdate('NO ACTION')->onDelete('NO ACTION');
-
-        });
-*/
         Schema::table('municipes', function (Blueprint $table) {
             $table->foreign('idProvince')->references('id')->on('provinces')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });
@@ -171,11 +162,6 @@ return new class extends Migration
             $table->foreign('shipping_company_id')->references('id')->on('shippingcompany');
         });
 
-        /*
-        Schema::table('users', function (Blueprint $table) {
-            $table->foreign('address')->references('id')->on('address');
-        });
-        */
     }
 
     /**
@@ -200,8 +186,6 @@ return new class extends Migration
         Schema::dropIfExists('order_items');
 
         Schema::dropIfExists('municipes');
-
-        //Schema::dropIfExists('incidences');
 
         Schema::dropIfExists('ccaa');
 
