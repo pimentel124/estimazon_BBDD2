@@ -170,11 +170,17 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+    public function destroy($productStockId)
     {
-        $product->productStocks()->delete();
 
-        $product->delete();
+        //get the stockid from the request with findOrFail
+        //delete the stock
+        //redirect to myprods with success message
+
+        
+        $deleteStock = ProductStock::findOrFail($productStockId);
+
+        $deleteStock->delete();
 
         return redirect()->route('myprods')->with('success', 'Producto eliminado con éxito.');
     }
@@ -185,7 +191,9 @@ class ProductController extends Controller
         $vendorId = auth()->id();
         $userProducts = Product::whereHas('productStocks', function ($query) use ($vendorId) {
             $query->where('vendor_id', $vendorId);
-        })->get();
+        })->with(['productStocks' => function ($query) use ($vendorId) {
+            $query->where('vendor_id', $vendorId);
+        }])->get();
 
         return view('products.myprods', compact('userProducts'));
     }

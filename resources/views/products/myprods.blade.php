@@ -19,6 +19,9 @@
                 </thead>
                 <tbody>
                     @foreach($userProducts as $product)
+                        @foreach ($product->productStocks as $stock)
+                            
+                        
                         <tr>
                             <td>{{ $product->name }}</td>
                             <td>{{ $product->description }}</td>
@@ -27,19 +30,20 @@
                                 <img src="{{ asset('storage/uploads/' . basename($product->image_url)) }}" alt="{{ $product->name }}" width="100">
                             @endif
                             </td>
-                            <td>{{ $product->getPrice() }} €</td>
+                            <td>{{ $stock->unit_price}} €</td>
                             <td>
                             <form action="{{ route('products.edit', $product->id) }}" method="GET" style="display: inline;">
                                 @csrf
                                 <button type="submit" class="btn btn-primary">Editar</button>
                             </form>
-                                <form action="{{ route('products.destroy', $product->id) }}" method="POST" style="display: inline;">
+                                <form action="{{ route('products.destroy', $stock->id) }}" method="POST" style="display: inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger">Eliminar</button>
                                 </form>
                             </td>
                         </tr>
+                        @endforeach
                     @endforeach
                 </tbody>
             </table>

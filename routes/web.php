@@ -29,7 +29,7 @@ Route::group(['middleware' => 'vendor'], function () {
     Route::post('/products/addStock', [App\Http\Controllers\ProductController::class, 'addStock'])->name('products.addStock');
     Route::get('/pedidos', [App\Http\Controllers\PedidoController::class, 'index'])->name('pedidos');
     Route::post('/enviar_pedido/{pedido}', [App\Http\Controllers\PedidoController::class, 'enviar'])->name('enviar_pedido');
-    Route::delete('products/{product}', [App\Http\Controllers\ProductController::class, 'destroy'])->name('products.destroy');
+    Route::delete('products/{productStockId}', [App\Http\Controllers\ProductController::class, 'destroy'])->name('products.destroy');
     Route::get('products/{product}/edit', [App\Http\Controllers\ProductController::class, 'edit'])->name('products.edit');
     Route::put('products/{product}', [App\Http\Controllers\ProductController::class, 'update'])->name('products.update');
 });
