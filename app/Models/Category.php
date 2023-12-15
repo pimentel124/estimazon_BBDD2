@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    protected $table = 'categories'; // Nombre correcto de la tabla
+    protected $table = 'categories';
     protected $fillable = ['name'];
 
     use HasFactory;
@@ -16,7 +16,7 @@ class Category extends Model
     {
         return $this->hasMany(Product::class);
     }
-    
+
     public function subcategories()
     {
         return $this->hasMany(Category::class);

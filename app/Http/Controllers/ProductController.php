@@ -53,14 +53,13 @@ class ProductController extends Controller
 
         //check if the user already has a stock for this product
         $productStock = ProductStock::where('product_id', $productId)->where('vendor_id', auth()->id())->first();
-        
+
         if ($productStock) {
             $productStock->amount += $amount;
             //only change price if the price is not empty or 0
             if ($price) {
                 $productStock->unit_price = $price;
             }
-            //$productStock->unit_price = $price;
             $productStock->save();
         } else {
             $productStock = new ProductStock([
@@ -90,12 +89,7 @@ class ProductController extends Controller
         ]);
 
         // Sube la imagen a storage/app/public/images publicly
-
         $imagePath = $request->file('image')->store('uploads', 'public');
-        
-        //how to access the image via url in blade
-        // <img src="{{ asset('storage/' . $product->image_url) }}" alt="">
-
 
         // Crea un nuevo producto y almacena la ruta de la imagen en la base de datos
         $product = new Product([
@@ -127,8 +121,6 @@ class ProductController extends Controller
         $product = Product::with(['productStocks' => function ($query) {
             $query->orderBy('unit_price', 'asc')->with('vendor');
         }])->findOrFail($id);
-        // Log all the product properties to the console
-        //dd($product);
 
         return view('products.show', compact('product'));
     }

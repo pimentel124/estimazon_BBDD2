@@ -13,7 +13,6 @@ class ControladorMiddleware
             return $next($request);
         }
 
-        // Redirect to a specific route if not a vendor
         return redirect()->route('index')->with('error', 'Unauthorized access.');
     }
 }

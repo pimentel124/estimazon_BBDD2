@@ -20,7 +20,7 @@
 
             <div class="form-group mb-3">
                 <label for="price">Precio:</label>
-                <input type="number" name="price" id="price" value="{{ $product->getPrice() }}" class="form-control" required>
+                <input type="number" name="price" step="0.01" id="price" value="{{ $product->getPrice() }}" class="form-control" required>
             </div>
 
             <div class="form-group mb-3">

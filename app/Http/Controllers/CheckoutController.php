@@ -16,8 +16,7 @@ class CheckoutController extends Controller
 {
     public function index()
     {
-        // Your logic for the checkout page goes here
-        return view('checkout'); // Assuming you have a blade file named checkout.blade.php
+        return view('checkout');
     }
 
     public function showCheckoutForm()
@@ -31,8 +30,6 @@ class CheckoutController extends Controller
         return view('checkout', ['provincias' => $provincias, 'addresses' => $addresses]);
     }
 
-    // Puedes agregar un método adicional para cargar los municipios en función de la provincia seleccionada
-// CheckoutController.php
     public function getMunicipiosByProvince($provinceId)
     {
         // Lógica para obtener municipios en función de la provincia seleccionada
@@ -52,7 +49,7 @@ class CheckoutController extends Controller
 
         $adressId = $request->input('address_id', -1);
         // Crea una nueva dirección
-        
+
         $address = Address::find($adressId);
 
 
@@ -75,25 +72,6 @@ class CheckoutController extends Controller
         $order->delivery_address = $address->id; // Asocia la dirección con la orden
         $order->save();
 
-        /*
-        $orderId = $order->id;
-        // Guarda los datos en la tabla "order_items"
-        $cart = $request->session()->get('carrito', []);
-
-        foreach ($cart as $product) {
-            $orderItem = new OrderItem();
-            $orderItem->order_id = $orderId;
-            $orderItem->product_id = $product->id;
-            $orderItem->quantity = $product->quantity; // Utiliza la cantidad del producto del carrito
-            $orderItem->vendor_id = $product->productStocks->first()->vendor_id;
-            $orderItem->save();
-        }
-        
-
-        // Limpia el carrito después de completar el pedido
-        $request->session()->forget('carrito');
-
-        */
         // Redirige a la página de confirmación u otro lugar según tu lógica
         return redirect()->route('index')->with('success', 'Pedido realizado con éxito');
     }

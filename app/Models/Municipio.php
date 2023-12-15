@@ -9,7 +9,6 @@ class Municipio extends Model
     protected $table = 'municipes'; // Nombre correcto de la tabla
     protected $fillable = ['idProvince', 'codMunicipe', 'DC', 'name'];
 
-    // En el modelo Municipio
 public function addresses()
 {
     return $this->hasMany(Address::class, 'municipe_id');
