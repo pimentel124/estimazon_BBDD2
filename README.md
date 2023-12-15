@@ -10,10 +10,11 @@
 
 **Note:** If you are using Windows, you can use [XAMPP](https://www.apachefriends.org/download.html) to install PHP, MySQL and Composer.
 
-### Clone the repository
+### Clone the repository and enter the project folder
 
 ```bash
 git clone https://github.com/pimentel124/estimazon_BBDD2
+cd estimazon_BBDD2
 ```
 
 ### Install the dependencies
