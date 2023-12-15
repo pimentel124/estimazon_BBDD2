@@ -15,10 +15,7 @@ class DailyOrderBackup extends Command
     {
         $backupDate = Carbon::now()->format('Y-m-d');
         $backupFileName = "orders_backup_{$backupDate}.sql";
-
         $tableName = 'orders';
-
-        // Utiliza el comando mysqldump para hacer la copia de seguridad
         $command = sprintf(
             'mysqldump -u %s -p%s %s %s > %s',
             config('database.connections.mysql.username'),
