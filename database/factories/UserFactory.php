@@ -11,9 +11,8 @@ use Illuminate\Support\Str;
 class UserFactory extends Factory
 {
     /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
+     * estableix l'estat predeterminat del model amb dades generades aleatòriament, 
+     * incloent-hi un rol i un número d'identificació fiscal (NIF) ficticis
      */
     public function definition(): array
     {
@@ -27,7 +26,7 @@ class UserFactory extends Factory
     }
 
     /**
-     * Indicate that the model's email address should be unverified.
+     * Indica que l'adreça de correu electrònic de l'usuari no ha estat verificada en establir email_verified_at com a nul.
      */
     public function unverified(): static
     {
