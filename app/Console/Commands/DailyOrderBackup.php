@@ -16,7 +16,6 @@ class DailyOrderBackup extends Command
         $backupDate = Carbon::now()->format('Y-m-d');
         $backupFileName = "orders_backup_{$backupDate}.sql";
 
-        // Cambia "orders" por el nombre real de tu tabla de pedidos
         $tableName = 'orders';
 
         // Utiliza el comando mysqldump para hacer la copia de seguridad
