@@ -17,13 +17,6 @@ class Product extends Model
         return $this->belongsTo(User::class);
     }
 
-    /*
-    public function incidences()
-    {
-        return $this->hasMany(Incidencia::class);
-    }
-    */
-
 
     public function productStocks()
 {

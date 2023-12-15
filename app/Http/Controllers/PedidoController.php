@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
 use App\Models\OrderItem;
-use App\Models\Incidencia;
 use App\Models\Order;
 use Illuminate\Support\Facades\DB;
 
@@ -75,16 +74,13 @@ class PedidoController extends Controller
 
     public function updateStatus(Request $request, Order $pedido)
     {
-        // Validación de datos de entrada (puedes personalizar según tus necesidades)
         $request->validate([
             'status' => 'required|string',
         ]);
 
-        // Asegúrate de que el nuevo estado sea válido
         $nuevoEstado = $request->input('status');
         $estadosValidos = ['cart', 'confirmed', 'to_center', 'delivering', 'recieved', 'alt_recieved', 'refused', 'returned'];
         if (!in_array($nuevoEstado, $estadosValidos)) {
-            // Si el nuevo estado no es válido, puedes manejarlo según tus necesidades (por ejemplo, devolver un mensaje de error)
             return back()->with('error', 'Estado no válido');
         }
 
@@ -100,9 +96,6 @@ class PedidoController extends Controller
                 $pedido->update(['status' => 'returned']);
             }
         }
-
-        // Puedes realizar otras acciones necesarias según el nuevo estado aquí
-
         // Devolver a la misma página de detalles del pedido con un mensaje de éxito
         return back()->with('success', 'Estado actualizado con éxito.');
     }

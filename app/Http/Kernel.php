@@ -67,7 +67,6 @@ class Kernel extends HttpKernel
     ];
 
     protected $routeMiddleware = [
-        // Other middlewares
         'vendor' => \App\Http\Middleware\VendorMiddleware::class,
         'comprador' => \App\Http\Middleware\CompradorMiddleware::class,
         'controlador' => \App\Http\Middleware\ControladorMiddleware::class,
