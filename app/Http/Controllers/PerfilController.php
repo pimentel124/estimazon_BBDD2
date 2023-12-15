@@ -23,7 +23,7 @@ class PerfilController extends Controller
             'password' => 'nullable|min:8|confirmed',
         ]);
 
-        // Update the user record
+        //Actualitza les dades de l'usuari
         User::where('id', $user->id)->update($data);
 
         return redirect()->route('perfil')->with('success', 'Perfil actualizado con éxito');
