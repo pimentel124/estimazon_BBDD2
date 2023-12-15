@@ -47,6 +47,5 @@ class ActualizarEstadoVendedorProcedure extends Migration
         DB::unprepared('
             DROP PROCEDURE IF EXISTS actualizar_estado_vendedor
         ');
-        // Puedes agregar una lógica para revertir el procedimiento almacenado si es necesario
     }
 }
