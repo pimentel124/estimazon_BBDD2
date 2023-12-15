@@ -1,34 +1,51 @@
 
-## How to run the project?
+# Estimazon
 
-#### Clone this repository
+## Prerequisits
 
-#### Have composer installed on your machine. [Download Composer](https://getcomposer.org/download/)
+- [PHP 8+](https://www.php.net/downloads.php)
+- [Node.js](https://nodejs.org/en/download/)
+- [MySQL](https://dev.mysql.com/downloads/installer/)
+- [Composer](https://getcomposer.org/download/)
 
-#### Install the dependencies
+**Note:** If you are using Windows, you can use [XAMPP](https://www.apachefriends.org/download.html) to install PHP, MySQL and Composer.
+
+### Clone the repository
+
+```bash
+git clone https://github.com/pimentel124/estimazon_BBDD2
+```
+
+### Install the dependencies
 
 ```bash
 composer update
+
 composer install
 
 npm install
+
+npm run build
+
+php artisan storage:link
+
 ```
 
-#### Create the database and add the credentials to the .env file
+### Opiton 1 - Run create the database and run the migrations
 
-The database must be called `estimazon`
-
-#### Run the migrations
+The database must be called `BD2KMIKZS`
 
 ```bash
 php artisan migrate
+php artisan db:seed
 ```
+
+#### Option 2 - Import the database manually
+
+the database is located on the root of the project and is called `BD2KMIKZS.sql`
 
 #### Run the project
 
 ```bash
-npm run build
-
-php artisan storage:link
 php artisan serve
 ```
