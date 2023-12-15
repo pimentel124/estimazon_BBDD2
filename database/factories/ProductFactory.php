@@ -13,9 +13,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class ProductFactory extends Factory
 {
     /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
+     * Defineix l'estat predeterminat del model amb dades generades aleatòriament.
      */
     public function definition(): array
     {
