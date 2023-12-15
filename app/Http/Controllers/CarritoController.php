@@ -21,7 +21,7 @@ class CarritoController extends Controller
                       ->first();
 
         if (!$order) {
-            //return and empty cart
+            //Retorna un carret buit
             return view('cart', ['order_items' => [] ]);
         }
 
@@ -32,17 +32,17 @@ class CarritoController extends Controller
 
         $productStock = ProductStock::find($productStockId);
 
-        //find the actual cart of the user (its a table called order with the field status set to cart)
+        //Troba el carret de l'usuari, és una taula order amb status 'cart'
         $order = Order::where('user_id', Auth::user()->id)->where('status', 'cart')->first();
 
-        //if the user doesnt have a cart, create one
+        //Si l'usuari no té carret, crea un
         if(!$order){
             $order = new Order();
             $order->user_id = Auth::user()->id;
             $order->status = 'cart';
             $order->save();
         }
-        //create a OrderItem with the productStockId and the amount
+        //Crea un orderItem amb el productStockId i la quantitat
         $orderItem = new OrderItem();
         $orderItem->product_id = $productStock->product_id;
         $orderItem->quantity = $amount;
