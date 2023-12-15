@@ -22,11 +22,9 @@ class Product extends Model
 {
     return $this->hasMany(ProductStock::class);
 }
-// Product.php (Product model)
 
 public function getPrice($vendor_id = null)
 {
-    // Assuming there's a relationship with ProductStock
     if ($vendor_id) {
         $productStock = $this->productStocks()->where('vendor_id', $vendor_id)->orderBy('unit_price')->first();
     } else {
